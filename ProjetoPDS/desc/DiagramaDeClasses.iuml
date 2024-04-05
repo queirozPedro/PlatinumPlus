@@ -1,0 +1,9 @@
+@startuml "Diagrama de Classes"
+
+    class Aluno{
+        
+    }
+
+
+
+@enduml
