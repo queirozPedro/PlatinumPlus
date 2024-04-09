@@ -16,68 +16,58 @@
 
     class Funcionario{
         -idUsuario: int
-
-        +excluirJogo(id: int): boolean
-        +adicionarJogo(id: int): boolean
     }
 
-    Funcionario --|> Usuario
-
-    Funcionario -- Jogo
-
-    Funcionario -- Cupom
+    Funcionario -right-|> Usuario
 
     class Jogo{
         -id: int
         -nome: String
         -genero: String
         -descricao: String
+        -dataLancamento: Date
         -valor: float
         -desenvolvedora: String
         -quantConquistas: int
         -descontoElegivel: int
-        -temCupom: boolean
 
+        +getDados(): Jogo
+        +setDados(*args): Jogo
         +criarJogo(nome: String, genero: String, descricao: String, valor: float, desenvolvedora: String, quantConquistas: int, descontoElegivel: int): boolean
-        +criarCupom(jogo: Jogo): boolean
         +listarJogos(): Arraylist<Jogo>
-        +listarJogosGenero(genero: String): Arraylist<Jogo>
-        +listarJogosValor(valor: String): Arraylist<Jogo>
+        +listarJogos(genero: String): Arraylist<Jogo>
+        +listarJogos(valor: float): Arraylist<Jogo>
         +editarJogo(id: int, item: String, valor: String): boolean
-
+        +excluirJogo(idJogo: int): boolean
     }
-
-    ' Usuario "1" --> "0..n" Jogo: possui >
 
     class Cupom{
         -id: int
+        -idUsuario: int
         -desconto: int
 
-        +testarCumpom(jogo: Jogo, cupom: Cupom): float
+        +criarCupom(jogoUsuario: JogoUsuario): boolean
+        +calculaDesconto(jogoUsuario: JogoUsuario): int
+        +checaDesconto(jogo: Jogo, cupom: Cupom): float
         +usarCumpom(jogo: Jogo, cupom: Cupom): boolean
     }
 
+    Cupom -- JogoUsuario: gerencia >
+
+    Funcionario -left-> Jogo: gerencia >
+
+    Funcionario --> Cupom: gerencia >
+
     Usuario "1" -- "0..n" Cupom: possui >
 
-    class Biblioteca{
-        -jogos: ArrayList<Jogo>
-
-        +adicionarJogo(id: int): Jogo
-        +listarJogos(jogos: ArrayList<Jogo>): void
+    class JogoUsuario{
+        -idUsuario: int
+        -idJogo: int
+        -quantObtidaConquistas: int
+        -temCupom: boolean
     }
 
-    Usuario "1" -- "1" Biblioteca: possui >
-
-    Biblioteca "0..n" -- "1" Jogo: possui >
-
-    class Homepage{
-        -jogos: ArrayList<Jogo>
-
-        +listarJogos(jogos: ArrayList<Jogo>): void
-    }
-
-    Homepage -- Jogo
-
-    Funcionario -- Homepage
+    Usuario "1" -- "0..n" JogoUsuario: possui >
+    JogoUsuario "0..n" -- "1" Jogo
 
 @enduml
