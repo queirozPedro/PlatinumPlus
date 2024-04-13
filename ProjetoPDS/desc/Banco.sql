@@ -8,6 +8,7 @@ CREATE TABLE Usuario (
 
 CREATE TABLE Funcionario (
     idAdm Serial PRIMARY KEY,
+    cpf VARCHAR(11) NOT NULL,
     FOREIGN KEY (cpf) REFERENCES Usuario(cpf)
 );
 
@@ -24,14 +25,16 @@ CREATE TABLE Jogo (
 );
 
 CREATE TABLE JogoUsuario (
-    IdUsuario Serial PRIMARY KEY,
-    FOREIGN KEY (idJogo) REFERENCES Jogo(idJogo),
+    cpfUsuario VARCHAR(11) NOT NULL,
+    idJogo int NOT NULL,
     QuantObtidaConquistas int NOT NULL,
-    TemCupom int DEFAULT 1
+    TemCupom int DEFAULT 1,
+    FOREIGN KEY (idJogo) REFERENCES Jogo(idJogo),
+    FOREIGN KEY (cpfUsuario) REFERENCES Usuario(cpf)
 );
 
 CREATE TABLE Cupom (
-    idCupom Serial PRIMARY KEY,
-    FOREIGN KEY (cpf) REFERENCES Usuario(cpf),
-    Desconto int NOT NULL
+    cpf VARCHAR(11) NOT NULL,
+    Desconto int NOT NULL,
+    FOREIGN KEY (cpf) REFERENCES Usuario(cpf)
 );
