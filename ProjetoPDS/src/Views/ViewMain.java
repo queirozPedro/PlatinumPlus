@@ -16,6 +16,7 @@ import Controllers.ControleUsuario;
 // import Controllers.ControleJogoUsuario;
 // import Controllers.ControleFuncionario;
 // import Models.Usuario;
+import Models.Funcionario;
 
 public class ViewMain {
 

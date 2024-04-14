@@ -10,7 +10,7 @@ import Models.Usuario;
 public class ControleUsuario {
     
     /**
-     * Esse método recebe os atribútos de aluno e cadastra um aluno no 
+     * Esse método recebe os atribútos de aluno e cadastra um aluno no banco
      * @param connection
      * @param nome
      * @param cpf

@@ -78,7 +78,7 @@ class JogoUsuario{
     +getIdUsuario(): int
     +getIdJogo(): int
     +getQuantObtidaConquistas(): int
-    +getTemCupom(): int 
+    +getTemCupom(): boolean
 }
 
 Usuario "1" -- "0..n" JogoUsuario: possui >
