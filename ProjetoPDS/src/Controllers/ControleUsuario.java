@@ -9,6 +9,15 @@ import Models.Usuario;
 
 public class ControleUsuario {
     
+    /**
+     * Esse método recebe os atribútos de aluno e cadastra um aluno no 
+     * @param connection
+     * @param nome
+     * @param cpf
+     * @param email
+     * @param senha
+     * @param telefone
+     */
     public static void criarConta(Connection connection, String nome, String cpf, String email, String senha, String telefone) {
         PreparedStatement state = null;
 
@@ -64,6 +73,17 @@ public class ControleUsuario {
         } catch (SQLException e) {
             // Trate a exceção ou registre o erro, não apenas imprima a pilha de exceção
             e.printStackTrace();
+        } finally {
+            try {
+                if (result != null) {
+                    result.close();
+                }
+                if (state != null) {
+                    state.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
 
         return null;
@@ -145,6 +165,17 @@ public class ControleUsuario {
             }
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            try {
+                if (result != null) {
+                    result.close();
+                }
+                if (state != null) {
+                    state.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
 
         return null;

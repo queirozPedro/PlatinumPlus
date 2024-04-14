@@ -23,9 +23,6 @@ public class ViewMain {
         boolean sair = false;
         Scanner sc = new Scanner(System.in);
         Connection connection = PostgreSQLConnection.getInstance().getConnection();
-        System.out.println("Visualizar erros de Conexão");
-        System.out.println("Aperte Enter para Continuar");
-        sc.nextLine();
 
         while (!sair) {
             try {
