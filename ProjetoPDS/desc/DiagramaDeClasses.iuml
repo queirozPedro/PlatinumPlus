@@ -89,6 +89,7 @@ JogoUsuario "0..n" -- "1" Jogo
 class ControleUsuario{
     +criarUsuario(nome: String, cpf: String, email: String, senha: String): boolean
     +editarUsuario(cpf: String, item: String, valor: String): boolean
+    +buscarUsuario(connection: Connection, cpf: String): Usuario
     +removerUsuario(cpf: String): boolean
     +autenticarUsuario(email: String, senha: String): Usuario
 }
@@ -99,6 +100,7 @@ class ControleFuncionario{
     +criarFuncionario(usuario: Usuario): boolean
     +editarFuncionario(cpf: String, item: String, valor: String): boolean
     +removerFuncionario(cpf: String): boolean
+    +autenticarFuncionario(email: String, senha: String): Usuario
 }
 
 ControleFuncionario --> Funcionario: gerencia >

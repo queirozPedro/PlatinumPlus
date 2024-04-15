@@ -9,8 +9,9 @@ public class Funcionario extends Usuario {
         return idUsuario;
     }
 
-    public Funcionario(String nome, String cpf, String senha, String email, String telefone) {
+    public Funcionario(String nome, String cpf, String senha, String email, String telefone, int idUsuario) {
         super(nome, cpf, senha, email, telefone);
+        this.idUsuario = idUsuario;
     }
 
 }

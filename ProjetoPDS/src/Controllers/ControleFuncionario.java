@@ -1,33 +1,37 @@
 package Controllers;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import Utils.PostgreSQLConnection;
+import Models.Usuario;
 
 public class ControleFuncionario {
 
 
-    public void criaFuncionario() {
+    public static boolean criaFuncionario(Usuario usuario) {
         Connection connection = PostgreSQLConnection.getInstance().getConnection();
         PreparedStatement state = null;
-        try {
-            String query = "INSERT INTO funcionario (cpf) VALUES (?)";
-            state = connection.prepareStatement(query);
-            state.setString(1, cpf);
-            state.executeUpdate();
-            System.out.println("criado funcionario");
-        } catch (Exception e) {
-            System.out.println(e);
-
-        } finally {
+        if (ControleUsuario.buscaUsuario(connection, usuario.getCpf()) == null) {
             try {
-                if (state != null) {
-                    state.close();
-                }
-            } catch (SQLException e) {
+                String query = "INSERT INTO funcionario (cpf) VALUES (?)";
+                state = connection.prepareStatement(query);
+                state.setString(1, usuario.getCpf());
+                state.executeUpdate();
+                System.out.println("criado funcionario");
+            } catch (Exception e) {
                 e.printStackTrace();
+
+            } finally {
+                try {
+                    if (state != null) {
+                        state.close();
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
             }
+            return true;
+        } else {
+            return false;
         }
     }
     

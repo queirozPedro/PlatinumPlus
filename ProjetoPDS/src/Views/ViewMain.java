@@ -11,11 +11,11 @@ import Utils.ValidarDados;
 // Imports de classes do projeto
 
 import Controllers.ControleUsuario;
-// import Controllers.ControleCupom;
-// import Controllers.ControleJogo;
-// import Controllers.ControleJogoUsuario;
-// import Controllers.ControleFuncionario;
-// import Models.Usuario;
+import Controllers.ControleCupom;
+import Controllers.ControleJogo;
+import Controllers.ControleJogoUsuario;
+import Controllers.ControleFuncionario;
+import Models.Usuario;
 import Models.Funcionario;
 
 public class ViewMain {
@@ -73,6 +73,7 @@ public class ViewMain {
     public static void MenuLogin(Scanner sc) throws InterruptedException, IOException {
         //int out = 3;
         boolean sair = false;
+        Connection connection = PostgreSQLConnection.getInstance().getConnection();
         do {
             try {
                 LimpaTela();
@@ -86,9 +87,9 @@ public class ViewMain {
                         LimpaTela();
                         System.out.println(" < Login >");
                         System.out.print("Email: ");
-                        //String email = sc.nextLine();
+                        String email = sc.nextLine();
                         System.out.print("Senha: ");
-                        //String senha = sc.nextLine();
+                        String senha = sc.nextLine();
 
                         /* 
                          * A lógica dessa parte deve ser implementada 
@@ -97,21 +98,21 @@ public class ViewMain {
                          * da Loja ou um Usuário padrão e faz o login.
                         */
 
-                        // if (Usuario.loginUsuario(email, senha) != null) {
-                        //     if (Adm.loginAdm(email, senha) != null) {
-                        //         menuAdmin(Adm.loginAdm(email, senha), sc);
-                        //     } else {
-                        //         menuUsuario(Usuario.loginUsuario(email, senha), sc);
-                        //     }
-                        // } else {
-                        //     LimpaTela();
-                        //     System.out.println(" Email ou Senha incorretos! ");
-                        //     if (--out == 0) {
-                        //         System.out.print(" Aguarde alguns minutos e tente novamente! ");
-                        //         sc.nextLine();
-                        //         return;
-                        //     }
-                        // }
+                        if (ControleUsuario.loginUsuario(connection, email, senha) != null) {
+                            if (Adm.loginAdm(email, senha) != null) {
+                                menuAdmin(Adm.loginAdm(email, senha), sc);
+                            } else {
+                                menuUsuario(ControleUsuario.loginUsuario(connection, email, senha), sc);
+                            }
+                        } else {
+                            LimpaTela();
+                            System.out.println(" Email ou Senha incorretos! ");
+                            if (--out == 0) {
+                                System.out.print(" Aguarde alguns minutos e tente novamente! ");
+                                sc.nextLine();
+                                return;
+                            }
+                        }
 
                         System.out.print("\n Aperte Enter para Continuar! ");
                         sc.nextLine();
