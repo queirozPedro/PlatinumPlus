@@ -1,23 +1,25 @@
 package Models;
 
+import java.sql.Date;
+
 public class Jogo {
     private int id;
     private String nome;
     private String genero;
     private String descricao;
-    //private Date dataLancamento;
+    private Date dataLancamento;
     private float valor;
     private String desenvolvedora;
     private int quantConquistas;
     private int descontoElegivel;
 
-    public Jogo(int id, String nome, String genero, String descricao, /*Date dataLancamento,*/ float valor,
+    public Jogo(int id, String nome, String genero, String descricao, Date dataLancamento, float valor,
             String desenvolvedora, int quantConquistas, int descontoElegivel) {
         this.id = id;
         this.nome = nome;
         this.genero = genero;
         this.descricao = descricao;
-        //this.dataLancamento = dataLancamento;
+        this.dataLancamento = dataLancamento;
         this.valor = valor;
         this.desenvolvedora = desenvolvedora;
         this.quantConquistas = quantConquistas;
@@ -51,8 +53,10 @@ public class Jogo {
     public boolean setDescricao(String descricao) {
         if (descricao != null) {
             this.descricao = descricao;
+            return true;
         } else {
             System.err.println("O valor de descricao não pode ser null");
+            return false;
         }
     }
 

@@ -2,12 +2,12 @@ package Models;
 
 public class Cupom {
     private int idCupom;
-    private int IdUsuario;
+    private String cpf;
     private int desconto;
 
-    public Cupom(int idCupom, int idUsuario, int desconto) {
+    public Cupom(int idCupom, String cpf, int desconto) {
         this.idCupom = idCupom;
-        this.IdUsuario = idUsuario;
+        this.cpf = cpf;
         this.desconto = desconto;
     }
 
@@ -15,12 +15,13 @@ public class Cupom {
         return idCupom;
     }
 
-    public int getIdUsuario() {
-        return IdUsuario;
-    }
-
     public int getDesconto() {
         return desconto;
     }
+
+    public String getCpf() {
+        return cpf;
+    }
     
+
 }

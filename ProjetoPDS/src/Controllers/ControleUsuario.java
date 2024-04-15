@@ -37,7 +37,7 @@ public class ControleUsuario {
                 // Insere os telefones dele na tabela Telefone com base em seu cpf
                 System.out.println(" Usuário Cadastrado!");
 
-            } catch (Exception e) {
+            } catch (SQLException e) {
                 e.printStackTrace();
             } finally {
                 try {
@@ -104,7 +104,7 @@ public class ControleUsuario {
             state.setString(1, valor);
             state.setString(2, usuario.getCpf());
             state.executeUpdate();
-            state.close();
+            state.close(); // Checar se precisa ser aqui
 
         } catch (Exception e) {
             e.printStackTrace();

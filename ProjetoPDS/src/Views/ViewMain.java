@@ -122,8 +122,7 @@ public class ViewMain {
                     default:
                         break;
                 }
-            } catch (NumberFormatException e) {
-            }
+            } catch (NumberFormatException e) {}
         } while (!sair);
 
     }
@@ -192,9 +191,7 @@ public class ViewMain {
                     case 0:
                         return;
                 }
-            } catch (NumberFormatException e) {
-            }
-
+            } catch (NumberFormatException e) {}
         } while (!sair);
     }
 

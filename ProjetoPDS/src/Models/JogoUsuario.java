@@ -1,20 +1,16 @@
 package Models;
 
 public class JogoUsuario {
-    private int idUsuario;
+    private String cpf;
     private int idJogo;
     private int quantObtidaConquistas;
     private boolean temCupom;
     
-    public JogoUsuario(int idUsuario, int idJogo, int quantObtidaConquistas, boolean temCupom) {
-        this.idUsuario = idUsuario;
+    public JogoUsuario(String cpf, int idJogo, int quantObtidaConquistas, boolean temCupom) {
+        this.cpf = cpf;
         this.idJogo = idJogo;
         this.quantObtidaConquistas = quantObtidaConquistas;
         this.temCupom = temCupom;
-    }
-
-    public int getIdUsuario() {
-        return idUsuario;
     }
 
     public int getIdJogo() {
@@ -25,9 +21,12 @@ public class JogoUsuario {
         return quantObtidaConquistas;
     }
 
-    public boolean isTemCupom() {
+    public boolean getTemCupom() {
         return temCupom;
     }
 
+    public String getCpf() {
+        return cpf;
+    }
     
 }

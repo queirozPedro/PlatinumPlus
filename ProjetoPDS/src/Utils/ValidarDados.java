@@ -12,11 +12,13 @@ public class ValidarDados {
         if (nome == null || nome.trim().isEmpty()) {
             return false;
         }
-        if (!nome.matches("^[A-Za-zÀ-ÖØ-öø-ÿ\\s0-9,?.-]+$")) {
+        if (!nome.matches("^[A-Za-zÀ-ÖØ-öø-ÿ\\s0-9]+$")) {
             return false;
         }
         return true;
     }
+
+    //
 
     public static boolean validarCpf(String cpf) {
         if (cpf == null || cpf.trim().isEmpty()) {
