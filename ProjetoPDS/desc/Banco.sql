@@ -34,6 +34,7 @@ CREATE TABLE JogoUsuario (
 );
 
 CREATE TABLE Cupom (
+    idCupom Serial PRIMARY KEY,
     cpf VARCHAR(11) NOT NULL,
     Desconto int NOT NULL,
     FOREIGN KEY (cpf) REFERENCES Usuario(cpf)

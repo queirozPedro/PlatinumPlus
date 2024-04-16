@@ -22,6 +22,19 @@ public class Cupom {
     public String getCpf() {
         return cpf;
     }
+
+    public void setIdCupom(int idCupom) {
+        this.idCupom = idCupom;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
+
+    public void setDesconto(int desconto) {
+        this.desconto = desconto;
+    }
+    
     
 
 }
