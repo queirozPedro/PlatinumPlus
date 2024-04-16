@@ -25,7 +25,7 @@ public class ControleUsuario {
             try {
 
                 // Insere o usuário na tabela Usuario
-                String query = "INSERT Into usuario (cpf, nome, senha, email, telefone) VALUES (?, ?, ?, ?, ?)";
+                String query = "INSERT Into Usuario (cpf, nome, senha, email, telefone) VALUES (?, ?, ?, ?, ?)";
                 state = connection.prepareStatement(query);
                 state.setString(1, cpf);
                 state.setString(2, nome);
@@ -59,7 +59,7 @@ public class ControleUsuario {
 
         try {
             // Seleciona tudo (*) na tabela Usuario onde o cpf foi o igual ao recebido
-            String query = "SELECT * From usuario where cpf = ?";
+            String query = "SELECT * From Usuario where cpf = ?";
             state = connection.prepareStatement(query);
             state.setString(1, cpf);
             result = state.executeQuery();
@@ -129,7 +129,7 @@ public class ControleUsuario {
             */
 
             // Remove o usuário da tabela Usuario
-            String query = "DELETE From usuario where cpf = ?";
+            String query = "DELETE From Usuario where cpf = ?";
             state = connection.prepareStatement(query);
             state.setString(1, cpf);
             state.executeUpdate();
@@ -155,7 +155,7 @@ public class ControleUsuario {
         try {
 
             // Seleciona o cpf do usuario na tabela que tenha os mesmos email e senha
-            String query = "SELECT cpf From usuario where email = ? AND senha = ?";
+            String query = "SELECT cpf From Usuario where email = ? AND senha = ?";
             state = connection.prepareStatement(query);
             state.setString(1, email);
             state.setString(2, senha);

@@ -71,7 +71,7 @@ public class ViewMain {
      * @throws IOException
      */
     public static void MenuLogin(Scanner sc) throws InterruptedException, IOException {
-        //int out = 3;
+        int out = 3;
         boolean sair = false;
         Connection connection = PostgreSQLConnection.getInstance().getConnection();
         do {
@@ -99,10 +99,10 @@ public class ViewMain {
                         */
 
                         if (ControleUsuario.loginUsuario(connection, email, senha) != null) {
-                            if (Adm.loginAdm(email, senha) != null) {
-                                menuAdmin(Adm.loginAdm(email, senha), sc);
+                            if (ControleFuncionario.loginFuncionario(connection, email, senha) != null) {
+                                menuFuncionario(connection, sc);
                             } else {
-                                menuUsuario(ControleUsuario.loginUsuario(connection, email, senha), sc);
+                                menuUsuario(connection, sc);
                             }
                         } else {
                             LimpaTela();
@@ -210,6 +210,90 @@ public class ViewMain {
         } else {
             new ProcessBuilder("sh", "-c", "clear").inheritIO().start().waitFor();
         }
+    }
+
+    public static void menuFuncionario(Connection connection, Scanner sc) throws InterruptedException, IOException {
+        boolean sair = false;
+        do {
+            try {
+                LimpaTela();
+                System.out.println("=== Tela do Funcionário ===");
+                System.out.println("1 -> Adicionar Jogo");
+                System.out.println("2 -> Excluir Jogo");
+                System.out.println("3 -> Listar Jogos");
+                System.out.println("4 -> Editar Usuário");
+                System.out.println("5 -> Editar Jogo");
+                System.out.println("0 -> Sair");
+                System.out.print(" >> ");
+                switch (Integer.valueOf(sc.nextLine())) {
+                    case 1:
+
+                    break;
+
+                    case 2:
+
+                    break;
+
+                    case 3:
+
+                    break;
+
+                    case 4:
+
+                    break;
+
+                    case 5:
+
+                    break;
+                }
+
+
+
+            }
+            catch (NumberFormatException e) {}
+        } while (!sair);
+    }
+
+    public static void menuUsuario(Connection connection, Scanner sc) throws InterruptedException, IOException {
+        boolean sair = false;
+        do {
+            try {
+                LimpaTela();
+                System.out.println("=== Tela do Usuário ===");
+                System.out.println("1 -> Comprar Jogo");
+                System.out.println("2 -> Usar Cupom");
+                System.out.println("3 -> Listar Jogos");
+                System.out.println("4 -> Listar Cupons");
+                System.out.println("5 -> Testar Cupom");
+                System.out.println("0 -> Sair");
+                System.out.print(" >> ");
+                switch (Integer.valueOf(sc.nextLine())) {
+                    case 1:
+
+                    break;
+
+                    case 2:
+
+                    break;
+
+                    case 3:
+
+                    break;
+
+                    case 4:
+
+                    break;
+
+                    case 5:
+
+                    break;
+                }
+
+
+
+            }
+            catch (NumberFormatException e) {}
+        } while (!sair);
     }
 
 }
