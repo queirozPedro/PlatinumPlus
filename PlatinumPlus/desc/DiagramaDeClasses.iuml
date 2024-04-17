@@ -9,17 +9,17 @@ class Usuario{
     +getNome(): String
     +getCpf(): String
     +getEmail(): String
+    +getTelefone(): String
     +getSenha(): String
     +setNome(nome: String): boolean
     +setCpf(cpf: String): boolean
     +setEmail(email: String): boolean
+    +setTelefone(String telefone): boolean
     +setSenha(senha: String): boolean
 }
 
 class Funcionario{
-    -idUsuario: int
-
-    +getIdUsuario(): int
+    
 }
 
 Funcionario --|> Usuario
@@ -29,7 +29,6 @@ class Jogo{
     -nome: String
     -genero: String
     -descricao: String
-    -dataLancamento: Date
     -valor: float
     -desenvolvedora: String
     -quantConquistas: int
@@ -39,7 +38,6 @@ class Jogo{
     +getNome(): String
     +getGenero(): String
     +getDescricao(): String
-    +getDataLancamento(): Date
     +getValor(): float
     +getDesenvolvedora(): String
     +getQuantConquistas(): int
@@ -48,7 +46,6 @@ class Jogo{
     +setNome(nome: String): boolean
     +setGenero(genero: String): boolean 
     +setDescricao(descricao: String): boolean
-    +setDataLancamento(data: Date): boolean
     +setValor(valor: float): boolean
     +setDesenvolvedora(dev: String): boolean
     +setQuantConquistas(quant: int): boolean
@@ -57,11 +54,11 @@ class Jogo{
 
 class Cupom{
     -idCupom: int
-    -idUsuario: int
+    -cpf: int
     -desconto: int
 
     +getIdCupom(): int
-    +getIdUsuario(): int
+    +getCpf(): int
     +getDesconto(): int
 }
 
@@ -70,12 +67,12 @@ Funcionario -- "1" Jogo: gerencia >
 Funcionario -- "1" Cupom: gerencia >
 
 class JogoUsuario{
-    -idUsuario: int
+    -cpf: int
     -idJogo: int
     -quantObtidaConquistas: int
     -temCupom: boolean
 
-    +getIdUsuario(): int
+    +getCpf(): int
     +getIdJogo(): int
     +getQuantObtidaConquistas(): int
     +getTemCupom(): boolean
@@ -107,6 +104,7 @@ ControleFuncionario --> Funcionario: gerencia >
 
 class ControleJogo{
     +criarJogo(nome: String, genero: String, descricao: String, valor: float, desenvolvedora: String, quantConquistas: int, descontoElegivel: int): boolean
+    +buscarJogo(int idJogo): Jogo jogo
     +listarJogos(): ArrayList<Jogo>
     +listarJogos(genero: String): ArrayList<Jogo>
     +listarJogos(valor: float): ArrayList<Jogo>
@@ -117,7 +115,8 @@ class ControleJogo{
 ControleJogo --> Jogo: gerencia > 
 
 class ControleCupom{
-    +criarCupom(jogoUsuario: JogoUsuario): boolean
+    +criarCupom(int idCupom, String cpf): boolean
+    +buscaCupom(int idCupom): cupom
     +calculaDesconto(jogoUsuario: JogoUsuario): int
     +checaDesconto(jogo: Jogo, cupom: Cupom): int
     +usarCupom(jogo: Jogo, cupom: Cupom): boolean
@@ -139,7 +138,6 @@ class ViewMain{
     +solicitaRemoverUsuario(cpf: String): boolean
     +solicitaAutenticarUsuario(email: String, senha: String): Usuario    
     +solicitaCriarFuncionario(usuario: Usuario): boolean
-    +solicitaEditarFuncionario(cpf: String, item: String, valor: String): boolean
     +solicitaRemoverFuncionario(cpf: String): boolean
     +solicitaCriarJogo(nome: String, genero: String, descricao: String, valor: float, desenvolvedora: String, quantConquistas: int, descontoElegivel: int): boolean
     +solicitaListarJogos(): ArrayList<Jogo>

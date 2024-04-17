@@ -7,6 +7,11 @@ import java.sql.SQLException;
 
 import Models.*;
 
+/**
+ * falta implementar:
+ * checarDesconto
+ * usarCupom
+ */
 public class ControleCupom {
 
     public static void criarCupom(Connection connection, int idCupom, String cpf) {
