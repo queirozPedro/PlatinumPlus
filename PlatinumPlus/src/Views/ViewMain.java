@@ -70,9 +70,200 @@ public class ViewMain {
         sc.close();
     }
 
-    public static String menuNavegacao(Scanner sc) throws InterruptedException, IOException {
-        LimpaTela();
-        return null;
+    public static void menuNavegacao(Scanner sc) throws InterruptedException, IOException {
+        boolean sair = false;
+        String search;
+        do {
+            try {
+                LimpaTela();
+                System.out.println(" < Navegar por Jogos >");
+                System.out.println(" 1 -> Explorar por gêneros");
+                System.out.println(" 2 -> Explorar Aleatórios");
+                System.out.println(" 3 -> Buscar");
+                System.out.println(" 0 -> Voltar");
+                System.out.print(" >> ");
+                switch (Integer.valueOf(sc.nextLine())) {
+                    case 1:
+                        LimpaTela();
+                        System.out.println(" < Gêneros >");
+                        System.out.println(" 1 -> Ação");
+                        System.out.println(" 2 -> Aventura");
+                        System.out.println(" 3 -> RPG ");
+                        System.out.println(" 4 -> Drama");
+                        System.out.println(" 5 -> Terror");
+                        System.out.println(" 6 -> FPS");
+                        System.out.println(" 7 -> Luta");
+                        System.out.println(" 8 -> Puzzle");
+                        System.out.println(" 9 -> Multiplayer");
+                        System.out.println("10 -> Singleplayer");
+                        System.out.println(" 0 -> Voltar");
+                        System.out.print(" >> ");
+                        switch (Integer.valueOf(sc.nextLine())) {
+                            case 1:
+                                search = ControleJogo.listarJogosUsuario(ControleJogo.buscarJogoGenero(connection, "Ação"));
+                                if(!search.trim().isBlank()){
+                                    LimpaTela();
+                                    System.out.println(" < Jogos de Ação >");
+                                    System.out.println(search);
+                                }
+                                else{
+                                    System.out.println(colorirTexto("\n Nenhum jogo de Ação encontrado.", corVermelho));
+                                }
+                                System.out.print(" Precione Enter para continuar! ");
+                                sc.nextLine();
+                                break;
+                            case 2:
+                                search = ControleJogo.listarJogosUsuario(ControleJogo.buscarJogoGenero(connection, "Aventura"));
+                                if(!search.trim().isBlank()){
+                                    LimpaTela();
+                                    System.out.println(" < Jogos de Aventura >");
+                                    System.out.println(search);
+                                }
+                                else{
+                                    System.out.println(colorirTexto("\n Nenhum jogo de Aventura encontrado.", corVermelho));
+                                }
+                                System.out.print(" Precione Enter para continuar! ");
+                                sc.nextLine();
+                                break;
+                            case 3:
+                                search = ControleJogo.listarJogosUsuario(ControleJogo.buscarJogoGenero(connection, "RPG"));
+                                if(!search.trim().isBlank()){
+                                    LimpaTela();
+                                    System.out.println(" < Jogos de RPG >");
+                                    System.out.println(search);
+                                }
+                                else{
+                                    System.out.println(colorirTexto("\n Nenhum jogo de RPG encontrado.", corVermelho));
+                                }
+                                System.out.print(" Precione Enter para continuar! ");
+                                sc.nextLine();
+                                break;
+                            case 4:
+                                search = ControleJogo.listarJogosUsuario(ControleJogo.buscarJogoGenero(connection, "Drama"));
+                                if(!search.trim().isBlank()){
+                                    LimpaTela();
+                                    System.out.println(" < Jogos de Drama >");
+                                    System.out.println(search);
+                                }
+                                else{
+                                    System.out.println(colorirTexto("\n Nenhum jogo de Drama encontrado.", corVermelho));
+                                }
+                                System.out.print(" Precione Enter para continuar! ");
+                                sc.nextLine();
+                                break;
+                            case 5:
+                                search = ControleJogo.listarJogosUsuario(ControleJogo.buscarJogoGenero(connection, "Terror"));
+                                if(!search.trim().isBlank()){
+                                    LimpaTela();
+                                    System.out.println(" < Jogos de Terror >");
+                                    System.out.println(search);
+                                }
+                                else{
+                                    System.out.println(colorirTexto("\n Nenhum jogo de Terror encontrado.", corVermelho));
+                                }
+                                System.out.print(" Precione Enter para continuar! ");
+                                sc.nextLine();
+                                break;
+                            case 6:
+                                search = ControleJogo.listarJogosUsuario(ControleJogo.buscarJogoGenero(connection, "FPS"));
+                                if(!search.trim().isBlank()){
+                                    LimpaTela();
+                                    System.out.println(" < Jogos de FPS >");
+                                    System.out.println(search);
+                                }
+                                else{
+                                    System.out.println(colorirTexto("\n Nenhum jogo de FPS encontrado.", corVermelho));
+                                }
+                                System.out.print(" Precione Enter para continuar! ");
+                                sc.nextLine();
+                                break;
+                            case 7:
+                                search = ControleJogo.listarJogosUsuario(ControleJogo.buscarJogoGenero(connection, "Luta"));
+                                if(!search.trim().isBlank()){
+                                    LimpaTela();
+                                    System.out.println(" < Jogos de Luta >");
+                                    System.out.println(search);
+                                }
+                                else{
+                                    System.out.println(colorirTexto("\n Nenhum jogo de Luta encontrado.", corVermelho));
+                                }
+                                System.out.print(" Precione Enter para continuar! ");
+                                sc.nextLine();
+                                break;
+                            case 8:
+                                search = ControleJogo.listarJogosUsuario(ControleJogo.buscarJogoGenero(connection, "Puzzle"));
+                                if(!search.trim().isBlank()){
+                                    LimpaTela();
+                                    System.out.println(" < Jogos de Puzzle >");
+                                    System.out.println(search);
+                                }
+                                else{
+                                    System.out.println(colorirTexto("\n Nenhum jogo de Puzzle encontrado.", corVermelho));
+                                }
+                                System.out.print(" Precione Enter para continuar! ");
+                                sc.nextLine();
+                                break;
+                            case 9:
+                                search = ControleJogo.listarJogosUsuario(ControleJogo.buscarJogoGenero(connection, "Multiplayer"));
+                                if(!search.trim().isBlank()){
+                                    LimpaTela();
+                                    System.out.println(" < Jogos de Multiplayer >");
+                                    System.out.println(search);
+                                }
+                                else{
+                                    System.out.println(colorirTexto("\n Nenhum jogo de Multiplayer encontrado.", corVermelho));
+                                }
+                                System.out.print(" Precione Enter para continuar! ");
+                                sc.nextLine();
+                                break;
+                            case 10:
+                                search = ControleJogo.listarJogosUsuario(ControleJogo.buscarJogoGenero(connection, "Singleplayer"));
+                                if(!search.trim().isBlank()){
+                                    LimpaTela();
+                                    System.out.println(" < Jogos de Singleplayer >");
+                                    System.out.println(search);
+                                }
+                                else{
+                                    System.out.println(colorirTexto("\n Nenhum jogo de Singleplayer encontrado.", corVermelho));
+                                }
+                                System.out.print(" Precione Enter para continuar. ");
+                                sc.nextLine();
+                                break;
+                            case 0:
+                                return;                        
+                            default:
+                                break;
+                        }
+                        break;
+                    case 2:
+                        LimpaTela();
+                        System.out.println(" < Explorar 10 Jogos Aleatórios >");
+                        System.out.println(ControleJogo.listarJogosUsuario(ControleJogo.explorarJogos(connection)));
+                        System.out.print("\n Precione Enter para sair.");
+                        sc.nextLine();
+                        break;
+                    case 3:
+                        LimpaTela(); 
+                        System.out.println(" < Buscar Jogo >");
+                        System.out.print(" >> ");
+                        search = ControleJogo.listarJogosUsuario(ControleJogo.buscarJogo(connection, sc.nextLine()));
+                        if(!search.trim().isBlank()){
+                            LimpaTela();
+                            System.out.println(" < Resultado da Busca >\n");
+                            System.out.println(search);
+                        }
+                        else{
+                            System.out.println(colorirTexto("\n Nenhum jogo encontrado.", corVermelho));
+                        }
+                        System.out.print(" Aperte enter para continuar! ");
+                        sc.nextLine();
+                    case 0:
+                        return;
+                    default:
+                        break;
+                }
+            } catch (NumberFormatException e) {}
+        } while (!sair);
     }
 
     public static void menuIniciarSessao(Scanner sc) throws InterruptedException, IOException {

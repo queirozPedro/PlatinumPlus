@@ -162,6 +162,99 @@ public class ControleJogo {
 
         return null;
     }
+    
+    public static ArrayList<Jogo> buscarJogoGenero(Connection connection, String genero) {
+        PreparedStatement state = null;
+        ResultSet result = null;
+
+        try {
+
+            ArrayList<Jogo> jogos = new ArrayList<Jogo>();
+            String query = "SELECT * FROM Jogo WHERE genero like ? ORDER BY RANDOM() LIMIT 10";
+            state = connection.prepareStatement(query);
+            state.setString(1, "%" + genero + "%");
+            result = state.executeQuery();
+
+            // Retorna o Jogo
+            while (result.next()) {
+                Jogo jogo = new Jogo(
+                    result.getInt(1), 
+                    result.getString(2), 
+                    result.getString(3), 
+                    result.getString(4), 
+                    result.getFloat(5), 
+                    result.getString(6), 
+                    result.getInt(7), 
+                    result.getInt(8)
+                );
+                jogos.add(jogo);
+            }
+            
+            return jogos;
+
+        } catch (SQLException e) {
+            // Trate a exceção ou registre o erro, não apenas imprima a pilha de exceção
+            e.printStackTrace();
+        } finally {
+            try {
+                if (result != null) {
+                    result.close();
+                }
+                if (state != null) {
+                    state.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return null;
+    }
+
+    public static ArrayList<Jogo> explorarJogos(Connection connection) {
+        PreparedStatement state = null;
+        ResultSet result = null;
+
+        try {
+            ArrayList<Jogo> jogos = new ArrayList<Jogo>();
+            String query = "SELECT * FROM Jogo ORDER BY RANDOM() LIMIT 10";
+            state = connection.prepareStatement(query);
+            result = state.executeQuery();
+
+            while (result.next()){
+                Jogo jogo = new Jogo(
+                    result.getInt(1), 
+                    result.getString(2), 
+                    result.getString(3), 
+                    result.getString(4), 
+                    result.getFloat(5), 
+                    result.getString(6), 
+                    result.getInt(7), 
+                    result.getInt(8)
+                );
+                jogos.add(jogo);
+            }
+
+            return jogos;
+
+        } catch (SQLException e) {
+            // Trate a exceção ou registre o erro, não apenas imprima a pilha de exceção
+            e.printStackTrace();
+        } finally {
+            try {
+                if (result != null) {
+                    result.close();
+                }
+                if (state != null) {
+                    state.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return null;
+    }
 
     /**
      * Método que exclui jogos pelo id

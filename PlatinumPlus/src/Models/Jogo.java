@@ -98,9 +98,9 @@ public class Jogo {
     }
 
     public String exibirJogo() {
-        return  "\n   |Nome = '" + nome + '\'' +
-                "\n   |Genero = '" + genero + '\'' +
-                "\n   |Valor = R$" + String.format("%.2f", valor).replace(".", ",");
+        return  "  |Nome = '" + nome + '\'' +
+                "\n  |Genero = '" + genero + '\'' +
+                "\n  |Valor = R$" + String.format("%.2f", valor).replace(".", ",");
     }
     
 }
