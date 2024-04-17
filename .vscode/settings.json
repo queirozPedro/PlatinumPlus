@@ -2,6 +2,6 @@
     "java.project.referencedLibraries": [
         "lib./*.jar",
         "/lib",
-        "ProjetoPDS/lib/postgresql-42.6.0.jar"
+        "PlatinumPlus/lib/postgresql-42.6.0.jar"
     ]
 }

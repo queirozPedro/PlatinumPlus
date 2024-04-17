@@ -55,5 +55,10 @@ public class Usuario {
     public String getTelefone() {
         return telefone;
     }
-    
+
+    @Override
+    public String toString() {
+        return "Usuario [nome=" + nome + ", cpf=" + cpf + ", senha=" + senha + ", email=" + email + ", telefone="
+                + telefone + "]";
+    }
 }

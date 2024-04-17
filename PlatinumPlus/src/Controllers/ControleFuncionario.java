@@ -18,7 +18,7 @@ public class ControleFuncionario {
 
         Connection connection = PostgreSQLConnection.getInstance().getConnection();
         PreparedStatement state = null;
-        if (ControleUsuario.buscaUsuario(connection, usuario.getCpf()) == null) {
+        if (ControleUsuario.buscarUsuario(connection, usuario.getCpf()) == null) {
             try {
                 String query = "INSERT INTO Funcionario (cpf) VALUES (?)";
                 state = connection.prepareStatement(query);
@@ -174,21 +174,24 @@ public class ControleFuncionario {
      * @param senha
      * @return Funcionario
      */
-    public static Usuario loginFuncionario(Connection connection ,String email, String senha) {
+    public static String loginFuncionario(Connection connection ,String email, String senha) {
+        String cpfUser = ControleUsuario.loginUsuario(connection, email, senha);
         PreparedStatement state = null;
         ResultSet result = null;
 
-        try {
 
+        try {
+            
             // Seleciona o cpf do funcionário na tabela que tenha os mesmos email e senha
-            String query = "SELECT cpf From Funcionario where email = ? AND senha = ?";
+            String query = "SELECT cpf From Funcionario where cpf = ?";
             state = connection.prepareStatement(query);
-            state.setString(1, email);
-            state.setString(2, senha);
+            state.setString(1, cpfUser);
             result = state.executeQuery();
+            
             if (result.next()) {
-                return buscaFuncionario(connection, result.getString(1));
+                return result.getString(1);
             }
+
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

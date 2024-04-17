@@ -9,7 +9,6 @@ import Utils.PostgreSQLConnection;
 // Imports de classes do projeto
 
 import Controllers.*;
-import Models.*;
 
 public class ViewMain {
 
@@ -34,23 +33,24 @@ public class ViewMain {
      * fruxo do código, algo como um botão de retroceder.
      */
 
-    static Connection connection = PostgreSQLConnection.getInstance().getConnection();
+    static Connection connection;
 
     public static void main(String[] args) throws InterruptedException, IOException {
         boolean sair = false;
         Scanner sc = new Scanner(System.in);
+        connection = PostgreSQLConnection.getInstance().getConnection();
 
         while (!sair) {
             try {
-                switch (Integer.valueOf(MenuPrincipal(sc))) {
+                switch (Integer.valueOf(menuPrincipal(sc))) {
                     case 1:
-                        MenuNavegacao(sc);
+                        menuNavegacao(sc);
                         break;
                     case 2:
-                        MenuBusca(sc);
+                        menuBusca(sc);
                         break;
                     case 3:
-                        MenuIniciarSessao(sc);
+                        menuIniciarSessao(sc);
                         break;
                     case 0: // Sair
                         sair = true;
@@ -66,16 +66,16 @@ public class ViewMain {
     }
 
     /**
-     * Menu principal
+     * menu principal
      * 
      * @param sc
      * @return void
      * @throws InterruptedException
      * @throws IOException
      */
-    public static String MenuPrincipal(Scanner sc) throws InterruptedException, IOException {
+    public static String menuPrincipal(Scanner sc) throws InterruptedException, IOException {
         LimpaTela();
-        System.out.println(" ===  Menu Principal  ===");
+        System.out.println(" ===  menu Principal  ===");
         System.out.println(" 1 -> Navegar por Jogos");
         System.out.println(" 2 -> Buscar Jogos");
         System.out.println(" 3 -> Iniciar Sessão");
@@ -84,19 +84,19 @@ public class ViewMain {
         return sc.nextLine();
     }
 
-    public static String MenuNavegacao(Scanner sc) throws InterruptedException, IOException {
+    public static String menuNavegacao(Scanner sc) throws InterruptedException, IOException {
         LimpaTela();
         return null;
     }
 
-    public static String MenuBusca(Scanner sc) throws InterruptedException, IOException {
+    public static String menuBusca(Scanner sc) throws InterruptedException, IOException {
         LimpaTela();
         return null;
     }
 
-    public static void MenuIniciarSessao(Scanner sc) throws InterruptedException, IOException {
+    public static void menuIniciarSessao(Scanner sc) throws InterruptedException, IOException {
         LimpaTela();
-        System.out.println(" ===  Menu Principal  ===");
+        System.out.println(" ===  menu Principal  ===");
         System.out.println(" 1 -> Login");
         System.out.println(" 2 -> Registrar-se");
         System.out.println(" 0 -> Sair");
@@ -105,10 +105,10 @@ public class ViewMain {
         try {
             switch (Integer.valueOf(sc.nextLine())) {
                 case 1: // Usuário
-                    MenuLogin(sc);
+                    menuLogin(sc);
                     break;
                 case 2: // Cliente
-                    MenuCadastro(sc);
+                    menuCadastro(sc);
                     break;
                 default:
                     break;
@@ -117,18 +117,18 @@ public class ViewMain {
     }
 
     /**
-     * Menu responsável por realizar o login do Usuário
+     * menu responsável por realizar o login do Usuário
      * 
      * @param sc
      * @throws InterruptedException
      * @throws IOException
      */
-    public static void MenuLogin(Scanner sc) throws InterruptedException, IOException {
+    public static void menuLogin(Scanner sc) throws InterruptedException, IOException {
         boolean sair = false;
         do {
             try {
                 LimpaTela();
-                System.out.println(" ===  Menu Login  ===");
+                System.out.println(" ===  menu Login  ===");
                 System.out.println(" 1 -> Realizar Login");
                 System.out.println(" 0 -> Voltar");
                 System.out.print(" >> ");
@@ -142,22 +142,23 @@ public class ViewMain {
                         System.out.print(" Senha: ");
                         String senha = sc.nextLine();
 
-                        if(ControleUsuario.loginUsuario(connection, email ,senha) != null){
-                            if(ControleFuncionario.loginFuncionario(connection, email, senha) == null){
-                                sc.nextLine();
-                                MenuUsuario(sc, ControleUsuario.loginUsuario(connection, email, senha));
+                        if(ControleUsuario.loginUsuario(connection, email, senha) != null){
+                            if(ControleFuncionario.loginFuncionario(connection, email, senha) != null){
+                                menuFuncionario(sc, ControleFuncionario.loginFuncionario(connection, email, senha));
+                                return;
                             }
                             else{
-                                // O login de Funcionario ta retornando um usuario
-                                //MenuFuncionario(sc, ControleFuncionario.loginFuncionario(connection, email, senha));
+                                menuUsuario(sc, ControleUsuario.loginUsuario(connection, email, senha));
+                                return;
                             }
-                        } else {
-                            System.out.println(colorirTexto(" Usuário inexistente.", corVermelho));
-                            System.out.println(" Precione Enter para Continuar!");
+                        }
+                        else{
+                            System.out.println(colorirTexto("\n Usuário não cadastrado!", corVermelho));
+                            System.out.print(" Precione Enter para Continuar!");
                             sc.nextLine();
                         }
-
                         break;
+                    
                     case 0:
                         sair = true;
                         break;
@@ -176,7 +177,7 @@ public class ViewMain {
      * @throws InterruptedException
      * @throws IOException
      */
-    public static void MenuCadastro(Scanner sc) throws InterruptedException, IOException {
+    public static void menuCadastro(Scanner sc) throws InterruptedException, IOException {
         boolean sair = false;
         do {
             try {
@@ -206,12 +207,15 @@ public class ViewMain {
                             reSenha = sc.nextLine();
 
                             if (ControleUsuario.validarUsuario(nome, cpf, email, senha, reSenha, telefone).trim().isBlank()) {
-                                if(ControleUsuario.buscaUsuario(connection, cpf) == null){
+                                if(ControleUsuario.buscarUsuario(connection, cpf) == null){
                                     System.out.println(" Confirmar operação 1 -> Sim, 2 -> Não");
                                     System.out.print(" >> ");
                                     if(Integer.valueOf(sc.nextLine()) == 1){
                                         if(ControleUsuario.criarConta(connection, nome, cpf, email, reSenha, telefone)){
                                             System.out.println(colorirTexto("Usuário Cadastrado com Sucesso!", corVerde));
+                                            System.out.print(" Aperte Enter para Continuar!");
+                                            sc.nextLine();
+                                            return;
                                         } else {
                                             System.out.println(colorirTexto("\n Erro ao criar o usuário.", corVermelho));
                                         }
@@ -241,40 +245,22 @@ public class ViewMain {
         } while (!sair);
     }
 
-    public static void MenuFuncionario(Scanner sc, Funcionario funcionario) throws InterruptedException, IOException {
+    public static void menuFuncionario(Scanner sc, String cpf) throws InterruptedException, IOException {
         boolean sair = false;
         do {
             try {
                 LimpaTela();
-                System.out.println("=== Tela do Funcionário ===");
-                System.out.println("1 -> Adicionar Jogo");
-                System.out.println("2 -> Excluir Jogo");
-                System.out.println("3 -> Listar Jogos");
-                System.out.println("4 -> Editar Usuário");
-                System.out.println("5 -> Editar Jogo");
-                System.out.println("0 -> Sair");
+                System.out.println("  === Menu de Gerenciamento ===");
+                System.out.println(" 1 -> Gerenciar Jogos");
+                System.out.println(" 2 -> Gerenciar Funcionários");
+                System.out.println(" 3 -> Editar Perfil");
+                System.out.println(" 0 -> Sair");
                 System.out.print(" >> ");
                 switch (Integer.valueOf(sc.nextLine())) {
                     case 1:
-
-                        break;
-
-                    case 2:
-                    
-                        break;
-                    
-                    case 3:
-                    
-                        break;
-                    
-                    case 4:
-                    
-                        break;
-                    
-                    case 5:
-                    
                         break;
                     case 0:
+                        sair = true;
                         return;
                 }
                 
@@ -283,45 +269,29 @@ public class ViewMain {
         } while (!sair);
     }
 
-    public static void MenuUsuario(Scanner sc, Usuario usuario) throws InterruptedException, IOException {
+    public static void menuUsuario(Scanner sc, String cpf) throws InterruptedException, IOException {
         boolean sair = false;
         do {
             try {
                 LimpaTela();
-                System.out.println("=== Tela do Usuário ===");
-                System.out.println("1 -> Comprar Jogo");
-                System.out.println("2 -> Usar Cupom");
-                System.out.println("3 -> Listar Jogos");
-                System.out.println("4 -> Listar Cupons");
-                System.out.println("5 -> Testar Cupom");
-                System.out.println("0 -> Sair");
+                System.out.println("  === PlatinumPlus ===");
+                System.out.println(" 1 -> Navegar por Jogos");
+                System.out.println(" 2 -> Pesquisar Jogo");
+                System.out.println(" 3 -> Minha Biblioteca");
+                System.out.println(" 4 -> Meus Cupons");
+                System.out.println(" 5 -> Meu Perfil");
+                System.out.println(" 0 -> Sair");
                 System.out.print(" >> ");
                 switch (Integer.valueOf(sc.nextLine())) {
                     case 1:
-                    
                         break;
-                    
-                    case 2:
-                    
-                        break;
-                    
-                    case 3:
-                    
-                        break;
-                    
-                    case 4:
-                    
-                        break;
-                    
-                    case 5:
-                    
-                        break;
+
                     case 0:
+                        sair = true;
                         return;
                 }
                 
-            } catch (NumberFormatException e) {
-            }
+            } catch (NumberFormatException e) {}
         } while (!sair);
     }    
     
@@ -360,8 +330,5 @@ public class ViewMain {
     public static String colorirTexto(String texto, String cor) {
         return cor + texto + resetCor;
     }
-
-    // implementação
-    // String textoColorido = colorirTexto("Este texto é verde!", CorVerde);
 
 }

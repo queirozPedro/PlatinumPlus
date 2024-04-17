@@ -33,7 +33,6 @@ public class ControleUsuario {
             state.setString(5, telefone);
             state.executeUpdate();
 
-            // Insere os telefones dele na tabela Telefone com base em seu cpf
             return true;
 
         } catch (SQLException e) {
@@ -57,7 +56,7 @@ public class ControleUsuario {
      * @param cpf
      * @return Usuario
      */
-    public static Usuario buscaUsuario(Connection connection, String cpf) {
+    public static Usuario buscarUsuario(Connection connection, String cpf) {
         PreparedStatement state = null;
         ResultSet result = null;
 
@@ -160,7 +159,7 @@ public class ControleUsuario {
      * @param senha
      * @return Usuario
      */
-    public static Usuario loginUsuario(Connection connection, String email, String senha) {
+    public static String loginUsuario(Connection connection, String email, String senha) {
         PreparedStatement state = null;
         ResultSet result = null;
 
@@ -173,7 +172,7 @@ public class ControleUsuario {
             state.setString(2, senha);
             result = state.executeQuery();
             if (result.next()) {
-                return buscaUsuario(connection, result.getString(1));
+                return result.getString(1);
             }
         } catch (Exception e) {
             e.printStackTrace();
