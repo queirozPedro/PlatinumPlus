@@ -39,3 +39,11 @@ CREATE TABLE Cupom (
     Desconto int NOT NULL,
     FOREIGN KEY (cpf) REFERENCES Usuario(cpf)
 );
+
+-- Vou fazer aqui em baixo os Drops das Tabelas, pra quando a gente quiser limpar o banco
+
+DROP TABLE Funcionario;
+DROP TABLE JogoUsuario;
+DROP TABLE Cupom;
+DROP TABLE Jogo;
+DROP TABLE Usuario;
