@@ -7,75 +7,20 @@ public class Jogo {
     private String nome;
     private String genero;
     private String descricao;
-    private Date dataLancamento;
     private float valor;
     private String desenvolvedora;
     private int quantConquistas;
     private int descontoElegivel;
-
-    public Jogo(int id, String nome, String genero, String descricao, Date dataLancamento, float valor,
-            String desenvolvedora, int quantConquistas, int descontoElegivel) {
+    
+    public Jogo(int id, String nome, String genero, String descricao, float valor, String desenvolvedora,
+            int quantConquistas, int descontoElegivel) {
         this.id = id;
         this.nome = nome;
         this.genero = genero;
         this.descricao = descricao;
-        this.dataLancamento = dataLancamento;
         this.valor = valor;
         this.desenvolvedora = desenvolvedora;
         this.quantConquistas = quantConquistas;
-        this.descontoElegivel = descontoElegivel;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public boolean setNome(String nome) {
-        if (nome != null) {
-            this.nome = nome;
-            return true;
-        } else {
-            System.err.println("O valor de nome não pode ser null");
-            return false;
-        }
-    }
-
-    public boolean setGenero(String genero) {
-        if (genero != null) {
-            this.genero = genero;
-            return true;
-        } else {
-            System.err.println("O valor de genero não pode ser null");
-            return false;
-        }
-    }
-
-    public boolean setDescricao(String descricao) {
-        if (descricao != null) {
-            this.descricao = descricao;
-            return true;
-        } else {
-            System.err.println("O valor de descricao não pode ser null");
-            return false;
-        }
-    }
-
-    public void setValor(float valor) {
-        this.valor = valor;
-    }
-
-    public void setDesenvolvedora(String desenvolvedora) {
-        if (desenvolvedora != null)
-            this.desenvolvedora = desenvolvedora;
-        else
-        System.err.println("O valor de desenvolvedora não pode ser null");
-    }
-
-    public void setQuantConquistas(int quantConquistas) {
-        this.quantConquistas = quantConquistas;
-    }
-
-    public void setDescontoElegivel(int descontoElegivel) {
         this.descontoElegivel = descontoElegivel;
     }
 
@@ -87,35 +32,58 @@ public class Jogo {
         return nome;
     }
 
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
     public String getGenero() {
         return genero;
+    }
+
+    public void setGenero(String genero) {
+        this.genero = genero;
     }
 
     public String getDescricao() {
         return descricao;
     }
 
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
     public float getValor() {
         return valor;
+    }
+
+    public void setValor(float valor) {
+        this.valor = valor;
     }
 
     public String getDesenvolvedora() {
         return desenvolvedora;
     }
 
+    public void setDesenvolvedora(String desenvolvedora) {
+        this.desenvolvedora = desenvolvedora;
+    }
+
     public int getQuantConquistas() {
         return quantConquistas;
+    }
+
+    public void setQuantConquistas(int quantConquistas) {
+        this.quantConquistas = quantConquistas;
     }
 
     public int getDescontoElegivel() {
         return descontoElegivel;
     }
 
-    @Override
-    public String toString() {
-        return "Jogo [id=" + id + ", nome=" + nome + ", genero=" + genero + ", descricao=" + descricao
-                + ", dataLancamento=" + dataLancamento + ", valor=" + valor + ", desenvolvedora=" + desenvolvedora
-                + ", quantConquistas=" + quantConquistas + ", descontoElegivel=" + descontoElegivel + "]";
+    public void setDescontoElegivel(int descontoElegivel) {
+        this.descontoElegivel = descontoElegivel;
     }
+
+
 
 }

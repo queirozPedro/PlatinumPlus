@@ -75,7 +75,7 @@ public class ViewMain {
      */
     public static String menuPrincipal(Scanner sc) throws InterruptedException, IOException {
         LimpaTela();
-        System.out.println(" ===  menu Principal  ===");
+        System.out.println(" ===  Menu Principal  ===");
         System.out.println(" 1 -> Navegar por Jogos");
         System.out.println(" 2 -> Buscar Jogos");
         System.out.println(" 3 -> Iniciar Sessão");
@@ -96,7 +96,7 @@ public class ViewMain {
 
     public static void menuIniciarSessao(Scanner sc) throws InterruptedException, IOException {
         LimpaTela();
-        System.out.println(" ===  menu Principal  ===");
+        System.out.println(" ===  Iniciar Sessão  ===");
         System.out.println(" 1 -> Login");
         System.out.println(" 2 -> Registrar-se");
         System.out.println(" 0 -> Sair");
@@ -113,7 +113,8 @@ public class ViewMain {
                 default:
                     break;
             }
-        } catch (NumberFormatException e) {}
+        } catch (NumberFormatException e) {
+        }
     }
 
     /**
@@ -128,7 +129,7 @@ public class ViewMain {
         do {
             try {
                 LimpaTela();
-                System.out.println(" ===  menu Login  ===");
+                System.out.println(" ===  Menu Login  ===");
                 System.out.println(" 1 -> Realizar Login");
                 System.out.println(" 0 -> Voltar");
                 System.out.print(" >> ");
@@ -142,30 +143,29 @@ public class ViewMain {
                         System.out.print(" Senha: ");
                         String senha = sc.nextLine();
 
-                        if(ControleUsuario.loginUsuario(connection, email, senha) != null){
-                            if(ControleFuncionario.loginFuncionario(connection, email, senha) != null){
+                        if (ControleUsuario.loginUsuario(connection, email, senha) != null) {
+                            if (ControleFuncionario.loginFuncionario(connection, email, senha) != null) {
                                 menuFuncionario(sc, ControleFuncionario.loginFuncionario(connection, email, senha));
                                 return;
-                            }
-                            else{
+                            } else {
                                 menuUsuario(sc, ControleUsuario.loginUsuario(connection, email, senha));
                                 return;
                             }
-                        }
-                        else{
+                        } else {
                             System.out.println(colorirTexto("\n Usuário não cadastrado!", corVermelho));
                             System.out.print(" Precione Enter para Continuar!");
                             sc.nextLine();
                         }
                         break;
-                    
+
                     case 0:
                         sair = true;
                         break;
                     default:
                         break;
                 }
-            } catch (NumberFormatException e) {}
+            } catch (NumberFormatException e) {
+            }
         } while (!sair);
 
     }
@@ -206,31 +206,36 @@ public class ViewMain {
                             System.out.print(" Confirmar senha: ");
                             reSenha = sc.nextLine();
 
-                            if (ControleUsuario.validarUsuario(nome, cpf, email, senha, reSenha, telefone).trim().isBlank()) {
-                                if(ControleUsuario.buscarUsuario(connection, cpf) == null){
+                            if (ControleUsuario.validarUsuario(nome, cpf, email, senha, reSenha, telefone).trim()
+                                    .isBlank()) {
+                                if (ControleUsuario.buscarUsuario(connection, cpf) == null) {
                                     System.out.println(" Confirmar operação 1 -> Sim, 2 -> Não");
                                     System.out.print(" >> ");
-                                    if(Integer.valueOf(sc.nextLine()) == 1){
-                                        if(ControleUsuario.criarConta(connection, nome, cpf, email, reSenha, telefone)){
-                                            System.out.println(colorirTexto("Usuário Cadastrado com Sucesso!", corVerde));
+                                    if (Integer.valueOf(sc.nextLine()) == 1) {
+                                        if (ControleUsuario.criarConta(connection, nome, cpf, email, reSenha,
+                                                telefone)) {
+                                            System.out
+                                                    .println(colorirTexto("Usuário Cadastrado com Sucesso!", corVerde));
                                             System.out.print(" Aperte Enter para Continuar!");
                                             sc.nextLine();
                                             return;
                                         } else {
-                                            System.out.println(colorirTexto("\n Erro ao criar o usuário.", corVermelho));
+                                            System.out
+                                                    .println(colorirTexto("\n Erro ao criar o usuário.", corVermelho));
                                         }
-                                    }
-                                    else{
+                                    } else {
                                         System.out.print(" Cancelando operação.\n Aperte Enter para Continuar!");
                                         sc.nextLine();
                                         break;
                                     }
-                                }
-                                else{
-                                    System.out.println(colorirTexto("\n Um usuário com esse cpf já está cadastrado.", corVermelho));
+                                } else {
+                                    System.out.println(colorirTexto("\n Um usuário com esse cpf já está cadastrado.",
+                                            corVermelho));
                                 }
                             } else {
-                                System.out.println("\n"+ colorirTexto(ControleUsuario.validarUsuario(nome, cpf, email, senha, reSenha, telefone), corVermelho));
+                                System.out.println("\n" + colorirTexto(
+                                        ControleUsuario.validarUsuario(nome, cpf, email, senha, reSenha, telefone),
+                                        corVermelho));
                             }
                             System.out.print(" Aperte Enter para Continuar!");
                             sc.nextLine();
@@ -258,12 +263,13 @@ public class ViewMain {
                 System.out.print(" >> ");
                 switch (Integer.valueOf(sc.nextLine())) {
                     case 1:
+                        menuGerenciarJogos(connection, sc);
                         break;
                     case 0:
                         sair = true;
                         return;
                 }
-                
+
             } catch (NumberFormatException e) {
             }
         } while (!sair);
@@ -290,15 +296,98 @@ public class ViewMain {
                         sair = true;
                         return;
                 }
-                
-            } catch (NumberFormatException e) {}
+
+            } catch (NumberFormatException e) {
+            }
         } while (!sair);
-    }    
-    
+    }
+
+    public static void menuGerenciarJogos(Connection connection, Scanner sc) throws InterruptedException, IOException {
+        boolean sair = false;
+        do {
+            try {
+                LimpaTela();
+                System.out.println("  === Gerenciar Jogos ===");
+                System.out.println(" 1 -> Adicionar Jogo");
+                System.out.println(" 2 -> Remover Jogo");
+                System.out.println(" 3 -> Pesquisar Jogo");
+                System.out.println(" 4 -> Buscar Jogo");
+                System.out.println(" 5 -> Editar Jogo");
+                System.out.println(" 0 -> Sair");
+                System.out.print(" >> ");
+                switch (Integer.valueOf(sc.nextLine())) {
+                    case 1:
+                        do {
+
+                            String nome, genero, descricao, desenvolvedora;
+                            float valor;
+                            int quantConquistas, descontoElegivel;
+
+                            LimpaTela();
+                            System.out.println(" < Cadastrar Jogo>");
+                            System.out.print(" Nome: ");
+                            nome = sc.nextLine();
+                            System.out.print(" Gênero: ");
+                            genero = sc.nextLine();
+                            System.out.print(" Descrição: ");
+                            descricao = sc.nextLine();
+                            System.out.print(" Desenvolvedora: ");
+                            desenvolvedora = sc.nextLine();
+                            System.out.print(" Valor: ");
+                            valor = Float.valueOf(sc.nextLine());
+                            System.out.print(" Quantidade de Conquistas: ");
+                            quantConquistas = Integer.valueOf(sc.nextLine());
+                            System.out.print(" Desconto Elegível: ");
+                            descontoElegivel = Integer.valueOf(sc.nextLine());
+
+                            if (ControleJogo.validarJogo(nome, genero, descricao, valor, desenvolvedora,
+                                    quantConquistas, descontoElegivel).trim().isBlank()) {
+                                if(ControleJogo.buscarJogoNome(connection, nome) == null){
+                                    System.out.println(" Cadastrar Jogo? 1 -> Sim, 2 -> Não");
+                                    System.out.print(" >> ");
+                                    if(Integer.valueOf(sc.nextLine()) == 1){
+                                        if(ControleJogo.criarJogo(connection, nome, genero, descricao, 
+                                        valor, desenvolvedora, quantConquistas, descontoElegivel)){
+                                            System.out.println(colorirTexto("\n Jogo cadastrado com sucesso!", corVerde));
+                                            System.out.print(" Aperte Enter para continuar! ");
+                                            sc.nextLine();
+                                            break;
+                                        }
+                                        else{
+                                            System.out.println(" Erro ao criar o Jogo!");
+                                            System.out.print(" Aperte Enter para continuar! ");
+                                            sc.nextLine();
+                                        }
+                                    }
+                                }   
+                                else{
+                                    System.out.println(colorirTexto("\n O jogo da existe!", corVermelho));
+                                    System.out.print(" Precione Enter para continuar! ");
+                                    sc.nextLine();
+                                }        
+                            }
+                            else{
+                                System.out.println(colorirTexto(ControleJogo.validarJogo(nome, genero, descricao, valor, desenvolvedora, quantConquistas, descontoElegivel), corVermelho));
+                                System.out.print(" Precione Enter para continuar! ");
+                                sc.nextLine();
+                            }
+
+                        } while (!sair);
+                    case 0:
+                        sair = true;
+                        return;
+                }
+
+            } catch (NumberFormatException e) {
+            }
+        } while (!sair);
+    }
+
     // Métodos de personalização do terminal
 
     /**
      * Método para limpar a tela do terminal
+     * 
      * @throws InterruptedException
      * @throws IOException
      */
@@ -311,22 +400,23 @@ public class ViewMain {
             new ProcessBuilder("sh", "-c", "clear").inheritIO().start().waitFor();
         }
     }
-    
+
     public static final String resetCor = "\u001B[0m";
     public static final String corVermelho = "\u001B[31m";
     public static final String corVerde = "\u001B[32m";
     public static final String corAmarelo = "\u001B[33m";
     public static final String corAzul = "\u001B[34m";
-    public static final String corRoxo= "\u001B[35m";
+    public static final String corRoxo = "\u001B[35m";
     public static final String corCiano = "\u001B[36m";
     public static final String corBranco = "\u001B[37m";
 
     /**
      * Método que recebe o código de uma cor e uma string e altera a cor dela
+     * 
      * @param texto
      * @param cor
      * @return String - Texto colorido
-     */ 
+     */
     public static String colorirTexto(String texto, String cor) {
         return cor + texto + resetCor;
     }

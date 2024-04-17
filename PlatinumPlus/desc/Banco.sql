@@ -17,7 +17,6 @@ CREATE TABLE Jogo (
     Nome VARCHAR(100) NOT NULL,
     Genero VARCHAR(100) NOT NULL,
     Descricao VARCHAR(255) NOT NULL,
-    DataLancamento DATE NOT NULL,
     Valor FLOAT NOT NULL,
     Desenvolvedora VARCHAR(100) NOT NULL,
     QuantConquistas int NOT NULL,
@@ -39,6 +38,9 @@ CREATE TABLE Cupom (
     Desconto int NOT NULL,
     FOREIGN KEY (cpf) REFERENCES Usuario(cpf)
 );
+
+insert into usuario(cpf, nome, email, senha, telefone) values ("admin", "admin", "admin", "admin", "admin");
+insert into Funcionario(cpf) value ("admin");
 
 -- Vou fazer aqui em baixo os Drops das Tabelas, pra quando a gente quiser limpar o banco
 

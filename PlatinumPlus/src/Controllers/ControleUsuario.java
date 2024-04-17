@@ -218,9 +218,6 @@ public class ControleUsuario {
         if (nome == null || nome.trim().isEmpty()) {
             return "O campo nome precisa ser preenchido.";
         }
-        if (!nome.matches("^[\\p{L}0-9\\s]+$")) {
-            return "O nome de usuário pode possuir apenas letras, números e espaços.";
-        }
         return "";
     }
 
