@@ -6,32 +6,11 @@ import java.util.Scanner;
 
 import Utils.PostgreSQLConnection;
 
-// Imports de classes do projeto
-
 import Controllers.*;
+import Models.Funcionario;
+import Models.Usuario;
 
 public class ViewMain {
-
-    /*
-     * Notas:
-     * 
-     * -> Na página inicial de sites de lojas de jogos online, os jogos podem ser
-     * vizualizados mesmo
-     * sem precisar de um login, isso poderia ser implementado aqui.
-     * -> O menu de usuário não deveria prender o usuário, ele deveria poder
-     * simplesmente navegar
-     * entre os jogos. Uma menu expecifico apenas para navegar entre os jogos não
-     * seria ruim.
-     * -> A classe Connection pode ser global, apenas com sua inicialização na main.
-     * Algo também deve
-     * ser feito para que o programa possa se reconectar em caso de queda, para que
-     * não exista a
-     * nescessidade de executar o programa inteiro novamente. Algo também deve ser
-     * feito, para que
-     * os dados da aplicação não sejam perdidos em caso de queda.
-     * -> Deve ser implementada alguma maneira de fazer o usuário não ficar preso ao
-     * fruxo do código, algo como um botão de retroceder.
-     */
 
     static Connection connection;
 
@@ -42,12 +21,33 @@ public class ViewMain {
 
         while (!sair) {
             try {
-                switch (Integer.valueOf(menuPrincipal(sc))) {
+                LimpaTela();
+                System.out.println(" ===  Menu Principal  ===");
+                System.out.println(" 1 -> Navegar por Jogos");
+                System.out.println(" 2 -> Buscar Jogos");
+                System.out.println(" 3 -> Iniciar Sessão");
+                System.out.println(" 0 -> Sair");
+                System.out.print(" >> ");
+                switch (Integer.valueOf(Integer.valueOf(sc.nextLine()))) {
                     case 1:
                         menuNavegacao(sc);
                         break;
                     case 2:
-                        menuBusca(sc);
+                        LimpaTela(); 
+                        System.out.println(" < Buscar Jogo >");
+                        System.out.print(" >> ");
+                        String search = ControleJogo.listarJogosUsuario(ControleJogo.buscarJogo(connection, sc.nextLine()));
+                        if(!search.trim().isBlank()){
+                            LimpaTela();
+                            System.out.println(" < Resultado da Busca >\n");
+                            System.out.println(search);
+                        }
+                        else{
+                            System.out.println(colorirTexto("\n Nenhum jogo encontrado.", corVermelho));
+                        }
+                        System.out.print(" Aperte enter para continuar! ");
+                        sc.nextLine();
+                         
                         break;
                     case 3:
                         menuIniciarSessao(sc);
@@ -65,31 +65,7 @@ public class ViewMain {
         sc.close();
     }
 
-    /**
-     * menu principal
-     * 
-     * @param sc
-     * @return void
-     * @throws InterruptedException
-     * @throws IOException
-     */
-    public static String menuPrincipal(Scanner sc) throws InterruptedException, IOException {
-        LimpaTela();
-        System.out.println(" ===  Menu Principal  ===");
-        System.out.println(" 1 -> Navegar por Jogos");
-        System.out.println(" 2 -> Buscar Jogos");
-        System.out.println(" 3 -> Iniciar Sessão");
-        System.out.println(" 0 -> Sair");
-        System.out.print(" >> ");
-        return sc.nextLine();
-    }
-
     public static String menuNavegacao(Scanner sc) throws InterruptedException, IOException {
-        LimpaTela();
-        return null;
-    }
-
-    public static String menuBusca(Scanner sc) throws InterruptedException, IOException {
         LimpaTela();
         return null;
     }
@@ -250,32 +226,7 @@ public class ViewMain {
         } while (!sair);
     }
 
-    public static void menuFuncionario(Scanner sc, String cpf) throws InterruptedException, IOException {
-        boolean sair = false;
-        do {
-            try {
-                LimpaTela();
-                System.out.println("  === Menu de Gerenciamento ===");
-                System.out.println(" 1 -> Gerenciar Jogos");
-                System.out.println(" 2 -> Gerenciar Funcionários");
-                System.out.println(" 3 -> Editar Perfil");
-                System.out.println(" 0 -> Sair");
-                System.out.print(" >> ");
-                switch (Integer.valueOf(sc.nextLine())) {
-                    case 1:
-                        menuGerenciarJogos(connection, sc);
-                        break;
-                    case 0:
-                        sair = true;
-                        return;
-                }
-
-            } catch (NumberFormatException e) {
-            }
-        } while (!sair);
-    }
-
-    public static void menuUsuario(Scanner sc, String cpf) throws InterruptedException, IOException {
+    public static void menuUsuario(Scanner sc, Usuario usuario) throws InterruptedException, IOException {
         boolean sair = false;
         do {
             try {
@@ -302,6 +253,36 @@ public class ViewMain {
         } while (!sair);
     }
 
+    public static void menuFuncionario(Scanner sc, Funcionario funcionario) throws InterruptedException, IOException {
+        boolean sair = false;
+        do {
+            try {
+                LimpaTela();
+                System.out.println("  === Menu de Gerenciamento ===");
+                System.out.println(" 1 -> Gerenciar Jogos");
+                System.out.println(" 2 -> Gerenciar Funcionários");
+                System.out.println(" 3 -> Editar Perfil");
+                System.out.println(" 0 -> Sair");
+                System.out.print(" >> ");
+                switch (Integer.valueOf(sc.nextLine())) {
+                    case 1:
+                        menuGerenciarJogos(connection, sc);
+                        break;
+                    case 2:
+                        menuGerenciarFuncionarios(connection, sc);
+                        break;
+                    case 3:
+                        menuPerfil(connection, sc, funcionario);    
+                    case 0:
+                        sair = true;
+                        return;
+                }
+
+            } catch (NumberFormatException e) {
+            }
+        } while (!sair);
+    }
+
     public static void menuGerenciarJogos(Connection connection, Scanner sc) throws InterruptedException, IOException {
         boolean sair = false;
         do {
@@ -310,9 +291,8 @@ public class ViewMain {
                 System.out.println("  === Gerenciar Jogos ===");
                 System.out.println(" 1 -> Adicionar Jogo");
                 System.out.println(" 2 -> Remover Jogo");
-                System.out.println(" 3 -> Pesquisar Jogo");
-                System.out.println(" 4 -> Buscar Jogo");
-                System.out.println(" 5 -> Editar Jogo");
+                System.out.println(" 3 -> Buscar Jogo");
+                System.out.println(" 4 -> Editar Jogo");
                 System.out.println(" 0 -> Sair");
                 System.out.print(" >> ");
                 switch (Integer.valueOf(sc.nextLine())) {
@@ -341,38 +321,38 @@ public class ViewMain {
                             descontoElegivel = Integer.valueOf(sc.nextLine());
 
                             if (ControleJogo.validarJogo(nome, genero, descricao, valor, desenvolvedora,
-                                    quantConquistas, descontoElegivel).trim().isBlank()) {
-                                if(ControleJogo.buscarJogoNome(connection, nome) == null){
-                                    System.out.println(" Cadastrar Jogo? 1 -> Sim, 2 -> Não");
-                                    System.out.print(" >> ");
-                                    if(Integer.valueOf(sc.nextLine()) == 1){
-                                        if(ControleJogo.criarJogo(connection, nome, genero, descricao, 
-                                        valor, desenvolvedora, quantConquistas, descontoElegivel)){
-                                            System.out.println(colorirTexto("\n Jogo cadastrado com sucesso!", corVerde));
-                                            System.out.print(" Aperte Enter para continuar! ");
-                                            sc.nextLine();
-                                            break;
-                                        }
-                                        else{
-                                            System.out.println(" Erro ao criar o Jogo!");
-                                            System.out.print(" Aperte Enter para continuar! ");
-                                            sc.nextLine();
-                                        }
+                                quantConquistas, descontoElegivel).trim().isBlank()) {
+                                System.out.println(" Cadastrar Jogo? 1 -> Sim, 2 -> Não");
+                                System.out.print(" >> ");
+                                if (Integer.valueOf(sc.nextLine()) == 1) {
+                                    if (ControleJogo.criarJogo(connection, nome, genero, descricao,
+                                            valor, desenvolvedora, quantConquistas, descontoElegivel)) {
+                                        System.out
+                                                .println(colorirTexto("\n Jogo cadastrado com sucesso!", corVerde));
+                                        System.out.print(" Aperte Enter para continuar! ");
+                                        sc.nextLine();
+                                        break;
+                                    } else {
+                                        System.out.println(" Erro ao criar o Jogo!");
+                                        System.out.print(" Aperte Enter para continuar! ");
+                                        sc.nextLine();
                                     }
-                                }   
-                                else{
+                                } else {
                                     System.out.println(colorirTexto("\n O jogo da existe!", corVermelho));
                                     System.out.print(" Precione Enter para continuar! ");
                                     sc.nextLine();
-                                }        
-                            }
-                            else{
-                                System.out.println(colorirTexto(ControleJogo.validarJogo(nome, genero, descricao, valor, desenvolvedora, quantConquistas, descontoElegivel), corVermelho));
+                                }
+                            } else {
+                                System.out.println(colorirTexto(ControleJogo.validarJogo(nome, genero, descricao, valor,
+                                        desenvolvedora, quantConquistas, descontoElegivel), corVermelho));
                                 System.out.print(" Precione Enter para continuar! ");
                                 sc.nextLine();
                             }
 
                         } while (!sair);
+                    case 2:
+                        LimpaTela();
+                        break;
                     case 0:
                         sair = true;
                         return;
@@ -382,6 +362,15 @@ public class ViewMain {
             }
         } while (!sair);
     }
+
+    public static void menuGerenciarFuncionarios(Connection connection, Scanner sc){
+        
+    }
+
+    public static void menuPerfil(Connection connection, Scanner sc, Usuario usuario){
+
+    }
+
 
     // Métodos de personalização do terminal
 
@@ -420,5 +409,4 @@ public class ViewMain {
     public static String colorirTexto(String texto, String cor) {
         return cor + texto + resetCor;
     }
-
 }

@@ -69,8 +69,7 @@ public class ControleUsuario {
 
             // Retorna o usuário
             if (result.next()) {
-                return new Usuario(result.getString(1), result.getString(2), result.getString(3), result.getString(4),
-                        result.getString(5));
+                return new Usuario(result.getString(1), result.getString(2), result.getString(3), result.getString(4), result.getString(5));
             }
 
         } catch (SQLException e) {
@@ -95,10 +94,6 @@ public class ControleUsuario {
     public void editarUsuario(Connection connection, String campo, String valor, Usuario usuario) {
         PreparedStatement state = null;
 
-        /*
-         * Primeiro checa se algum desses dados foi recebido e aplica valores
-         * locais aos que forem null.
-         */
         try {
 
             // Atualiza nome, senha e email na tabela usuario na posição do cpf usado.
@@ -153,26 +148,26 @@ public class ControleUsuario {
     }
 
     /**
-     * 
      * @param connection
      * @param email
      * @param senha
      * @return Usuario
      */
-    public static String loginUsuario(Connection connection, String email, String senha) {
+    public static Usuario loginUsuario(Connection connection, String email, String senha) {
         PreparedStatement state = null;
         ResultSet result = null;
 
         try {
 
             // Seleciona o cpf do usuario na tabela que tenha os mesmos email e senha
-            String query = "SELECT cpf From Usuario where email = ? AND senha = ?";
+            String query = "SELECT * From Usuario where email = ? AND senha = ?";
             state = connection.prepareStatement(query);
             state.setString(1, email);
             state.setString(2, senha);
             result = state.executeQuery();
+            
             if (result.next()) {
-                return result.getString(1);
+                return new Usuario(result.getString(1), result.getString(2), result.getString(3), result.getString(4), result.getString(5));
             }
         } catch (Exception e) {
             e.printStackTrace();

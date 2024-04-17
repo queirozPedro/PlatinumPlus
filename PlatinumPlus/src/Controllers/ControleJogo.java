@@ -4,20 +4,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+
 import Models.Jogo;
 
 public class ControleJogo {
-
-    /**
-     * Esse método recebe os atribútos de aluno e cadastra um aluno no banco
-     * 
-     * @param connection
-     * @param nome
-     * @param cpf
-     * @param email
-     * @param senha
-     * @param telefone
-     */
 
     public static boolean criarJogo(Connection connection, String nome, String genero, String descricao, float valor, String desenvolvedora, int quantConquistas, int descontoElegivel) {
         PreparedStatement state = null;
@@ -122,21 +113,36 @@ public class ControleJogo {
         return null;
     }
 
-    public static Jogo buscarJogoNome(Connection connection, String nome) {
+    public static ArrayList<Jogo> buscarJogo(Connection connection, String string) {
         PreparedStatement state = null;
         ResultSet result = null;
 
         try {
 
-            String query = "SELECT * From Jogo where nome = ?";
+            ArrayList<Jogo> jogos = new ArrayList<Jogo>();
+            String query = "SELECT * FROM Jogo WHERE nome like ? OR genero like ? OR desenvolvedora like ?";
             state = connection.prepareStatement(query);
-            state.setString(1, nome);
+            state.setString(1, "%" + string + "%");
+            state.setString(2, "%" + string + "%");
+            state.setString(3, "%" + string + "%");
             result = state.executeQuery();
 
             // Retorna o Jogo
-            if (result.next()) {
-                return new Jogo(result.getInt(1), result.getString(2), result.getString(3), result.getString(4), result.getFloat(5), result.getString(6), result.getInt(7), result.getInt(8));
+            while (result.next()) {
+                Jogo jogo = new Jogo(
+                    result.getInt(1), 
+                    result.getString(2), 
+                    result.getString(3), 
+                    result.getString(4), 
+                    result.getFloat(5), 
+                    result.getString(6), 
+                    result.getInt(7), 
+                    result.getInt(8)
+                );
+                jogos.add(jogo);
             }
+            
+            return jogos;
 
         } catch (SQLException e) {
             // Trate a exceção ou registre o erro, não apenas imprima a pilha de exceção
@@ -157,108 +163,12 @@ public class ControleJogo {
         return null;
     }
 
-    public static Jogo buscarJogoGenero(Connection connection, String genero) {
-        PreparedStatement state = null;
-        ResultSet result = null;
-
-        try {
-
-            String query = "SELECT * From Jogo where genero = ?";
-            state = connection.prepareStatement(query);
-            state.setString(1, genero);
-            result = state.executeQuery();
-
-            // Retorna o Jogo
-            if (result.next()) {
-                return new Jogo(result.getInt(1), result.getString(2), result.getString(3), result.getString(4), result.getFloat(5), result.getString(6), result.getInt(7), result.getInt(8));
-            }
-
-        } catch (SQLException e) {
-            // Trate a exceção ou registre o erro, não apenas imprima a pilha de exceção
-            e.printStackTrace();
-        } finally {
-            try {
-                if (result != null) {
-                    result.close();
-                }
-                if (state != null) {
-                    state.close();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-
-        return null;
-    }
-
-    public static Jogo buscarJogoDeselvovedora(Connection connection, String desenvolvedora) {
-        PreparedStatement state = null;
-        ResultSet result = null;
-
-        try {
-
-            String query = "SELECT * From Jogo where desenvolvedora = ?";
-            state = connection.prepareStatement(query);
-            state.setString(1, desenvolvedora);
-            result = state.executeQuery();
-
-            // Retorna o Jogo
-            if (result.next()) {
-                return new Jogo(result.getInt(1), result.getString(2), result.getString(3), result.getString(4), result.getFloat(5), result.getString(6), result.getInt(7), result.getInt(8));
-            }
-
-        } catch (SQLException e) {
-            // Trate a exceção ou registre o erro, não apenas imprima a pilha de exceção
-            e.printStackTrace();
-        } finally {
-            try {
-                if (result != null) {
-                    result.close();
-                }
-                if (state != null) {
-                    state.close();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-
-        return null;
-    }
-
-    // // Isso aqui eu faço jajá
-    // public void editarJogo(Connection connection, String campo, String valor,
-    // Jogo Jogo) {
-    // PreparedStatement state = null;
-
-    // /*
-    // * Primeiro checa se algum desses dados foi recebido e aplica valores
-    // * locais aos que forem null.
-    // */
-    // try {
-
-    // // Atualiza nome, senha e email na tabela Jogo na posição do cpf usado.
-    // String query = "UPDATE Jogo SET " + campo + " = ? WHERE cpf = ?";
-    // state = connection.prepareStatement(query);
-    // state.setString(1, valor);
-    // state.setString(2, Jogo.getCpf());
-    // state.executeUpdate();
-    // state.close(); // Checar se precisa ser aqui
-
-    // } catch (Exception e) {
-    // e.printStackTrace();
-    // } finally {
-    // try {
-    // if (state != null) {
-    // state.close();
-    // }
-    // } catch (SQLException e) {
-    // e.printStackTrace();
-    // }
-    // }
-    // }
-
+    /**
+     * Método que exclui jogos pelo id
+     * @param connection
+     * @param idJogo
+     * @return boolean
+     */
     public static boolean excluirJogo(Connection connection, int idJogo) {
         PreparedStatement state = null;
 
@@ -371,4 +281,19 @@ public class ControleJogo {
         return "";
     }
 
+    public static String listarJogosUsuario(ArrayList<Jogo> jogos){
+        String string = "";
+        for(int i = 0; i < jogos.size(); i++){
+            string += jogos.get(i).exibirJogo()+"\n\n";
+        }
+        return string;
+
+    }
+    public static String listarJogosFuncionario(ArrayList<Jogo> jogos){
+        String string = "";
+        for(int i = 0; i < jogos.size(); i++){
+            string += jogos.get(i).toString()+"\n\n";
+        }
+        return string;
+    }
 }
