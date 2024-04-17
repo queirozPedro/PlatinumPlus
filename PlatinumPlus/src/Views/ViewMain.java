@@ -14,6 +14,11 @@ public class ViewMain {
 
     static Connection connection;
 
+    /**
+     * precisa implementar:
+     * navegar os jogos sem logar, logando como admin, e logando como usuario 
+     * 
+     */
     public static void main(String[] args) throws InterruptedException, IOException {
         boolean sair = false;
         Scanner sc = new Scanner(System.in);
@@ -225,7 +230,12 @@ public class ViewMain {
             }
         } while (!sair);
     }
-
+    
+    /**
+     * falta implementar:
+     * case 1, 2, 3, 4, e 5
+     * implementar o log out no case 5
+     */
     public static void menuUsuario(Scanner sc, Usuario usuario) throws InterruptedException, IOException {
         boolean sair = false;
         do {
@@ -252,7 +262,11 @@ public class ViewMain {
             }
         } while (!sair);
     }
-
+    /**
+     * case 2 vai ser removido
+     * falta implementar:
+     * case 3
+     */
     public static void menuFuncionario(Scanner sc, Funcionario funcionario) throws InterruptedException, IOException {
         boolean sair = false;
         do {
@@ -283,6 +297,12 @@ public class ViewMain {
         } while (!sair);
     }
 
+    /**
+     * falta implementar:
+     * case 2
+     * case 3
+     * case 4
+     */
     public static void menuGerenciarJogos(Connection connection, Scanner sc) throws InterruptedException, IOException {
         boolean sair = false;
         do {
