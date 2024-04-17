@@ -7,4 +7,8 @@ public class Funcionario extends Usuario {
         super(nome, cpf, senha, email, telefone);
     }
 
+    public Funcionario(Usuario usuario){
+        super(usuario.getNome(), usuario.getCpf(), usuario.getSenha(), usuario.getEmail(), usuario.getTelefone());
+    }
+
 }

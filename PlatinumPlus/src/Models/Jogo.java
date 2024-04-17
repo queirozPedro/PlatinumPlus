@@ -10,7 +10,7 @@ public class Jogo {
     private String desenvolvedora;
     private int quantConquistas;
     private int descontoElegivel;
-    
+
     public Jogo(int id, String nome, String genero, String descricao, float valor, String desenvolvedora,
             int quantConquistas, int descontoElegivel) {
         this.id = id;
@@ -83,6 +83,24 @@ public class Jogo {
         this.descontoElegivel = descontoElegivel;
     }
 
+    @Override
+    public String toString() {
+        return "Jogo {" +
+                "\n   Id=" + id +
+                "\n   Nome='" + nome + '\'' +
+                "\n   Genero='" + genero + '\'' +
+                "\n   Descricao='" + descricao + '\'' +
+                "\n   Valor=" + valor +
+                "\n   Desenvolvedora='" + desenvolvedora + '\'' +
+                "\n   QuantConquistas=" + quantConquistas +
+                "\n   DescontoElegivel=" + descontoElegivel +
+                "\n}";
+    }
 
-
+    public String exibirJogo() {
+        return  "\n   |Nome = '" + nome + '\'' +
+                "\n   |Genero = '" + genero + '\'' +
+                "\n   |Valor = R$" + String.format("%.2f", valor).replace(".", ",");
+    }
+    
 }

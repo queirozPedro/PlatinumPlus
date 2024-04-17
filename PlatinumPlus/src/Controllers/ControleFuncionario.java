@@ -44,53 +44,6 @@ public class ControleFuncionario {
     }
 
     /**
-     * Método que busca um Funcionario
-     * (Precisa de revisão)
-     * Possível erro:
-     * A tabela funcionario não possui um retorno completo, já que ela é uma 
-     * tabela apenas com cpf. Provavelmente precisa usar um método de buscar 
-     * usuario para que ele retorne esses dados.
-     * @param connection
-     * @param cpf
-     * @return
-     */
-    public static Funcionario buscaFuncionario(Connection connection, String cpf) {
-        PreparedStatement state = null;
-        ResultSet result = null;
-
-        try {
-            // Seleciona tudo (*) na tabela Usuario onde o cpf foi o igual ao recebido
-            String query = "SELECT * From Funcionario where cpf = ?";
-            state = connection.prepareStatement(query);
-            state.setString(1, cpf);
-            result = state.executeQuery();
-
-            // Retorna o usuário
-            if (result.next()) {
-                return new Funcionario(result.getString(1), result.getString(2), result.getString(3), result.getString(4),
-                        result.getString(5));
-            }
-
-        } catch (SQLException e) {
-            // Trate a exceção ou registre o erro, não apenas imprima a pilha de exceção
-            e.printStackTrace();
-        } finally {
-            try {
-                if (result != null) {
-                    result.close();
-                }
-                if (state != null) {
-                    state.close();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-
-        return null;
-    }
-
-    /**
      * Metodo para editar um cpf? parece estanho
      * (Precisa de revisão)
      * @param connection
@@ -174,22 +127,22 @@ public class ControleFuncionario {
      * @param senha
      * @return Funcionario
      */
-    public static String loginFuncionario(Connection connection ,String email, String senha) {
-        String cpfUser = ControleUsuario.loginUsuario(connection, email, senha);
+    public static Funcionario loginFuncionario(Connection connection ,String email, String senha) {
+        Usuario userAux = ControleUsuario.loginUsuario(connection, email, senha);
+
         PreparedStatement state = null;
         ResultSet result = null;
-
 
         try {
             
             // Seleciona o cpf do funcionário na tabela que tenha os mesmos email e senha
             String query = "SELECT cpf From Funcionario where cpf = ?";
             state = connection.prepareStatement(query);
-            state.setString(1, cpfUser);
+            state.setString(1, userAux.getCpf());
             result = state.executeQuery();
             
             if (result.next()) {
-                return result.getString(1);
+                return new Funcionario(ControleUsuario.buscarUsuario(connection, result.getString(1)));
             }
 
         } catch (Exception e) {
