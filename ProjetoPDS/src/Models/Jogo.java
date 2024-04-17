@@ -110,5 +110,12 @@ public class Jogo {
     public int getDescontoElegivel() {
         return descontoElegivel;
     }
-    
+
+    @Override
+    public String toString() {
+        return "Jogo [id=" + id + ", nome=" + nome + ", genero=" + genero + ", descricao=" + descricao
+                + ", dataLancamento=" + dataLancamento + ", valor=" + valor + ", desenvolvedora=" + desenvolvedora
+                + ", quantConquistas=" + quantConquistas + ", descontoElegivel=" + descontoElegivel + "]";
+    }
+
 }

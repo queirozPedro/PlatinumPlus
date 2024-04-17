@@ -15,40 +15,26 @@ public class Usuario {
         this.telefone = telefone;
     }
 
-    public void setCpf(String cpf) {
-        if (cpf != null)
-            this.cpf = cpf;
-        else
-            System.out.println("O valor de cpf não pode ser null");
-    }
-
     public void setNome(String nome) {
-        if (nome != null)
-            this.nome = nome;
-        else
-            System.out.println("O valor de nome não pode ser null");
+        this.nome = nome;
     }
 
-    public void setEmail(String email) {
-        if (email != null)
-            this.email = email;
-        else
-            System.out.println("O valor de email não pode ser null");
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
     }
 
     public void setSenha(String senha) {
-        if (senha != null)
-            this.senha = senha;
-        else
-            System.out.println("O valor de senha não pode ser null");
+        this.senha = senha;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public void setTelefone(String telefone) {
-        if (telefone != null)
-            this.telefone = telefone;
-        else
-            System.out.println("O valor de telefone não pode ser null");
+        this.telefone = telefone;
     }
+
 
     public String getCpf() {
         return cpf;

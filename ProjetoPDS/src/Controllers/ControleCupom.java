@@ -5,8 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import Models.Cupom
-import Models.JogoUsuario;
+import Models.Cupom;
 
 public class ControleCupom {
 

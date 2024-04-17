@@ -8,7 +8,14 @@ import Models.Usuario;
 public class ControleFuncionario {
 
 
+    /**
+     * Método que Cria um Funcionario no Banco
+     * (Precisa de Revisão)
+     * @param usuario
+     * @return
+     */
     public static boolean criaFuncionario(Usuario usuario) {
+
         Connection connection = PostgreSQLConnection.getInstance().getConnection();
         PreparedStatement state = null;
         if (ControleUsuario.buscaUsuario(connection, usuario.getCpf()) == null) {
@@ -36,6 +43,17 @@ public class ControleFuncionario {
         }
     }
 
+    /**
+     * Método que busca um Funcionario
+     * (Precisa de revisão)
+     * Possível erro:
+     * A tabela funcionario não possui um retorno completo, já que ela é uma 
+     * tabela apenas com cpf. Provavelmente precisa usar um método de buscar 
+     * usuario para que ele retorne esses dados.
+     * @param connection
+     * @param cpf
+     * @return
+     */
     public static Funcionario buscaFuncionario(Connection connection, String cpf) {
         PreparedStatement state = null;
         ResultSet result = null;
@@ -72,6 +90,14 @@ public class ControleFuncionario {
         return null;
     }
 
+    /**
+     * Metodo para editar um cpf? parece estanho
+     * (Precisa de revisão)
+     * @param connection
+     * @param campo
+     * @param valor
+     * @param funcionario
+     */
     public void editarFuncionario(Connection connection, String campo, String valor, Funcionario funcionario) {
         PreparedStatement state = null;
 
@@ -102,6 +128,13 @@ public class ControleFuncionario {
         }
     }
 
+    /**
+     * Método que remove um funcionário do banco de dados
+     * (Precisa de revisão)
+     * Possivel erro: O funcionário será excluido, mas e o usuário que ele herda?
+     * @param connection
+     * @param cpf
+     */
     public static void excluirFuncionario(Connection connection, String cpf) {
         PreparedStatement state = null;
 
@@ -131,6 +164,16 @@ public class ControleFuncionario {
         }
     }
 
+    /**
+     * Método que faz a autenticação do funcionário.
+     * (Precisa de revisão)
+     * Possível erro: a tabela funcionário não possui esses campos. O tipo do retorno também está 
+     * errado.
+     * @param connection
+     * @param email
+     * @param senha
+     * @return Funcionario
+     */
     public static Usuario loginFuncionario(Connection connection ,String email, String senha) {
         PreparedStatement state = null;
         ResultSet result = null;
@@ -160,8 +203,6 @@ public class ControleFuncionario {
                 e.printStackTrace();
             }
         }
-
         return null;
-    }
-    
+    }   
 }

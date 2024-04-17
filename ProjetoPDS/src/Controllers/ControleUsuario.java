@@ -8,9 +8,10 @@ import java.sql.SQLException;
 import Models.Usuario;
 
 public class ControleUsuario {
-    
+
     /**
      * Esse método recebe os atribútos de aluno e cadastra um aluno no banco
+     * 
      * @param connection
      * @param nome
      * @param cpf
@@ -18,41 +19,44 @@ public class ControleUsuario {
      * @param senha
      * @param telefone
      */
-    public static void criarConta(Connection connection, String nome, String cpf, String email, String senha, String telefone) {
+    public static boolean criarConta(Connection connection, String nome, String cpf, String email, String senha, String telefone) {
         PreparedStatement state = null;
 
-        if (buscaUsuario(connection, cpf) == null) {
+        try {
+            // Insere o usuário na tabela Usuario
+            String query = "INSERT Into Usuario (cpf, nome, senha, email, telefone) VALUES (?, ?, ?, ?, ?)";
+            state = connection.prepareStatement(query);
+            state.setString(1, cpf);
+            state.setString(2, nome);
+            state.setString(3, senha);
+            state.setString(4, email);
+            state.setString(5, telefone);
+            state.executeUpdate();
+
+            // Insere os telefones dele na tabela Telefone com base em seu cpf
+            return true;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
             try {
-
-                // Insere o usuário na tabela Usuario
-                String query = "INSERT Into Usuario (cpf, nome, senha, email, telefone) VALUES (?, ?, ?, ?, ?)";
-                state = connection.prepareStatement(query);
-                state.setString(1, cpf);
-                state.setString(2, nome);
-                state.setString(3, senha);
-                state.setString(4, email);
-                state.setString(5, telefone);
-                state.executeUpdate();
-
-                // Insere os telefones dele na tabela Telefone com base em seu cpf
-                System.out.println(" Usuário Cadastrado!");
-
+                if (state != null) {
+                    state.close();
+                }
             } catch (SQLException e) {
                 e.printStackTrace();
-            } finally {
-                try {
-                    if (state != null) {
-                        state.close();
-                    }
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
             }
-        } else {
-            System.out.println(" ERRO! Cpf já Cadastrado!");
         }
+
+        return false;
     }
 
+    /**
+     * 
+     * @param connection
+     * @param cpf
+     * @return Usuario
+     */
     public static Usuario buscaUsuario(Connection connection, String cpf) {
         PreparedStatement state = null;
         ResultSet result = null;
@@ -99,7 +103,7 @@ public class ControleUsuario {
         try {
 
             // Atualiza nome, senha e email na tabela usuario na posição do cpf usado.
-            String query = "UPDATE Usuario SET "+ campo +" = ? WHERE cpf = ?";
+            String query = "UPDATE Usuario SET " + campo + " = ? WHERE cpf = ?";
             state = connection.prepareStatement(query);
             state.setString(1, valor);
             state.setString(2, usuario.getCpf());
@@ -125,8 +129,9 @@ public class ControleUsuario {
         try {
             /*
              * Aqui precisa ser colocada a lógica:
-             * Se um usuário possúi jogos ou cupons, eles precisam ser excluidos antes do usuario ser excluido 
-            */
+             * Se um usuário possúi jogos ou cupons, eles precisam ser excluidos antes do
+             * usuario ser excluido
+             */
 
             // Remove o usuário da tabela Usuario
             String query = "DELETE From Usuario where cpf = ?";
@@ -148,7 +153,14 @@ public class ControleUsuario {
         }
     }
 
-    public static Usuario loginUsuario(Connection connection ,String email, String senha) {
+    /**
+     * 
+     * @param connection
+     * @param email
+     * @param senha
+     * @return Usuario
+     */
+    public static Usuario loginUsuario(Connection connection, String email, String senha) {
         PreparedStatement state = null;
         ResultSet result = null;
 
@@ -180,5 +192,79 @@ public class ControleUsuario {
 
         return null;
     }
-    
+
+    /**
+     * Esse método funciona como uma verificação dos dados do usuário.
+     * Retorna uma string com os erros encontrados na validação dos dados.
+     * 
+     * @param nome
+     * @param cpf
+     * @param email
+     * @param senha
+     * @param reSenha
+     * @param telefone
+     * @return String
+     */
+    public static String validarUsuario(String nome, String cpf, String email, String senha, String reSenha, String telefone) {
+        String string = "";
+        string += validarNome(nome) != "" ? " " + validarNome(nome) + "\n" : "";
+        string += validarCpf(cpf) != "" ? " " + validarCpf(cpf) + "\n" : "";
+        string += validarEmail(email) != "" ? " " + validarEmail(email) + "\n" : "";
+        string += validarSenha(senha, reSenha) != "" ? " " + validarSenha(senha, reSenha) + "\n" : "";
+        string += validarTelefone(telefone) != "" ? " " + validarTelefone(telefone) + "\n" : "";
+        return string;
+    }
+
+    public static String validarNome(String nome) {
+        if (nome == null || nome.trim().isEmpty()) {
+            return "O campo nome precisa ser preenchido.";
+        }
+        if (!nome.matches("^[\\p{L}0-9\\s]+$")) {
+            return "O nome de usuário pode possuir apenas letras, números e espaços.";
+        }
+        return "";
+    }
+
+    public static String validarCpf(String cpf) {
+        if (cpf == null || cpf.trim().isEmpty()) {
+            return "O campo cpf precisa ser preenchido.";
+        }
+        if (!cpf.matches("\\d{11}")) {
+            return "O cpf deve possuir 11 digitos";
+        }
+        return "";
+    }
+
+    public static String validarTelefone(String telefone) {
+        if (telefone == null || telefone.isEmpty()) {
+            return "O campo telefone precisa ser preenchido.";
+        }
+        if (!telefone.matches("\\d{11}")) {
+            return "O telefone deve possuir 11 digitos";
+        }
+        return "";
+    }
+
+    public static String validarEmail(String email) {
+        if (email == null || email.trim().isEmpty()) {
+            return "O campo email precisa ser preenchido.";
+        }
+        if (!email.matches("^[A-Za-z0-9+_.-]+@(.+)$")) {
+            return "Digite um email válido.";
+        }
+        return "";
+
+    }
+
+    public static String validarSenha(String senha, String reSenha) {
+        if (senha == null || senha.trim().isEmpty() || senha.length() < 6) {
+            return "A senha deve possuir no mínimo 6 caracteres.";
+        } else {
+            if (senha.trim().equals(reSenha.trim())) {
+                return "";
+            } else {
+                return "As senhas devem concidir.";
+            }
+        }
+    }
 }
