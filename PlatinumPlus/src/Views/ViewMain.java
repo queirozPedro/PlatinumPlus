@@ -29,8 +29,7 @@ public class ViewMain {
                 LimpaTela();
                 System.out.println(" ===  Menu Principal  ===");
                 System.out.println(" 1 -> Navegar por Jogos");
-                System.out.println(" 2 -> Buscar Jogos");
-                System.out.println(" 3 -> Iniciar Sessão");
+                System.out.println(" 2 -> Iniciar Sessão");
                 System.out.println(" 0 -> Sair");
                 System.out.print(" >> ");
                 switch (Integer.valueOf(Integer.valueOf(sc.nextLine()))) {
@@ -38,23 +37,6 @@ public class ViewMain {
                         menuNavegacao(sc);
                         break;
                     case 2:
-                        LimpaTela(); 
-                        System.out.println(" < Buscar Jogo >");
-                        System.out.print(" >> ");
-                        String search = ControleJogo.listarJogosUsuario(ControleJogo.buscarJogo(connection, sc.nextLine()));
-                        if(!search.trim().isBlank()){
-                            LimpaTela();
-                            System.out.println(" < Resultado da Busca >\n");
-                            System.out.println(search);
-                        }
-                        else{
-                            System.out.println(colorirTexto("\n Nenhum jogo encontrado.", corVermelho));
-                        }
-                        System.out.print(" Aperte enter para continuar! ");
-                        sc.nextLine();
-                         
-                        break;
-                    case 3:
                         menuIniciarSessao(sc);
                         break;
                     case 0: // Sair
@@ -77,7 +59,7 @@ public class ViewMain {
             try {
                 LimpaTela();
                 System.out.println(" < Navegar por Jogos >");
-                System.out.println(" 1 -> Explorar por gêneros");
+                System.out.println(" 1 -> Explorar por Gêneros");
                 System.out.println(" 2 -> Explorar Aleatórios");
                 System.out.println(" 3 -> Buscar");
                 System.out.println(" 0 -> Voltar");
@@ -109,8 +91,7 @@ public class ViewMain {
                                 else{
                                     System.out.println(colorirTexto("\n Nenhum jogo de Ação encontrado.", corVermelho));
                                 }
-                                System.out.print(" Precione Enter para continuar! ");
-                                sc.nextLine();
+                                pressEnterToContinue(sc);
                                 break;
                             case 2:
                                 search = ControleJogo.listarJogosUsuario(ControleJogo.buscarJogoGenero(connection, "Aventura"));
@@ -290,7 +271,7 @@ public class ViewMain {
     }
 
     /**
-     * menu responsável por realizar o login do Usuário
+     * Menu responsável por realizar o login do Usuário
      * 
      * @param sc
      * @throws InterruptedException
@@ -488,12 +469,6 @@ public class ViewMain {
         } while (!sair);
     }
 
-    /**
-     * falta implementar:
-     * case 2
-     * case 3
-     * case 4
-     */
     public static void menuGerenciarJogos(Connection connection, Scanner sc) throws InterruptedException, IOException {
         boolean sair = false;
         do {
@@ -545,32 +520,66 @@ public class ViewMain {
                                         break;
                                     } else {
                                         System.out.println(" Erro ao criar o Jogo!");
-                                        System.out.print(" Aperte Enter para continuar! ");
-                                        sc.nextLine();
+                                        pressEnterToContinue(sc);
                                     }
                                 } else {
                                     System.out.println(colorirTexto("\n O jogo da existe!", corVermelho));
-                                    System.out.print(" Precione Enter para continuar! ");
-                                    sc.nextLine();
+                                    pressEnterToContinue(sc);
                                 }
                             } else {
                                 System.out.println(colorirTexto(ControleJogo.validarJogo(nome, genero, descricao, valor,
                                         desenvolvedora, quantConquistas, descontoElegivel), corVermelho));
-                                System.out.print(" Precione Enter para continuar! ");
-                                sc.nextLine();
+                                pressEnterToContinue(sc);
                             }
-
+                            break;
                         } while (!sair);
                     case 2:
                         LimpaTela();
+                        System.out.println(" < Excluir Jogo >");
+                        System.out.print(" Id do jogo: ");
+                        int id = Integer.valueOf(sc.nextLine());
+                        if(ControleJogo.buscarJogo(connection, id) != null){
+                            System.out.println(ControleJogo.buscarJogo(connection, id).toString());
+                            System.out.println(" Deseja Excluir o Jogo? 1 -> Sim, 2 -> Não");
+                            System.out.print(" >> ");
+                            if(Integer.valueOf(sc.nextLine()) == 1){
+                                if(ControleJogo.excluirJogo(connection, id)){
+                                    System.out.println(colorirTexto(" Jogo excluido com sucesso!", corVermelho));
+                                }
+                            }
+                        } else {
+                            System.out.println(colorirTexto("\n Jogo não encontrado.", corVermelho));
+                        }
+                        pressEnterToContinue(sc);
+                        break;
+                    case 3:
+                        LimpaTela(); 
+                        System.out.println(" < Buscar Jogo >");
+                        System.out.print(" >> ");
+                        String search = ControleJogo.listarJogosFuncionario(ControleJogo.buscarJogo(connection, sc.nextLine()));
+                        if(!search.trim().isBlank()){
+                            LimpaTela();
+                            System.out.println(" < Resultado da Busca >\n");
+                            System.out.println(search);
+                        }
+                        else{
+                            System.out.println(colorirTexto("\n Nenhum jogo encontrado.", corVermelho));
+                        }
+                        pressEnterToContinue(sc);
+                        break;
+                    case 4:
+                        LimpaTela();
+                        System.out.println(" < Editar Jogos >");
+                        System.out.println(" Falta implementar");
+                        System.out.print(" Aperte enter para continuar! ");
+                        sc.nextLine();
                         break;
                     case 0:
                         sair = true;
                         return;
                 }
 
-            } catch (NumberFormatException e) {
-            }
+            } catch (NumberFormatException e) {}
         } while (!sair);
     }
 
@@ -619,5 +628,10 @@ public class ViewMain {
      */
     public static String colorirTexto(String texto, String cor) {
         return cor + texto + resetCor;
+    }
+
+    public static void pressEnterToContinue(Scanner sc){
+        System.out.print("\n Pressione Enter Para Continuar ");
+        sc.nextLine();
     }
 }

@@ -98,8 +98,8 @@ public class Jogo {
     }
 
     public String exibirJogo() {
-        return  "  |Nome = '" + nome + '\'' +
-                "\n  |Genero = '" + genero + '\'' +
+        return  "  |Nome = " + nome +
+                "\n  |Genero = " + genero +
                 "\n  |Valor = R$" + String.format("%.2f", valor).replace(".", ",");
     }
     
