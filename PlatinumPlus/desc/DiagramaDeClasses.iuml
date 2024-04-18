@@ -1,0 +1,162 @@
+@startuml "Diagrama de Classes"
+
+class Usuario{
+    -nome: String
+    -cpf: String
+    -email: String
+    -senha: String
+
+    +getNome(): String
+    +getCpf(): String
+    +getEmail(): String
+    +getTelefone(): String
+    +getSenha(): String
+    +setNome(nome: String): boolean
+    +setCpf(cpf: String): boolean
+    +setEmail(email: String): boolean
+    +setTelefone(String telefone): boolean
+    +setSenha(senha: String): boolean
+}
+
+class Funcionario{
+    
+}
+
+Funcionario --|> Usuario
+
+class Jogo{
+    -id: int
+    -nome: String
+    -genero: String
+    -descricao: String
+    -valor: float
+    -desenvolvedora: String
+    -quantConquistas: int
+    -descontoElegivel: int
+
+    +getId(): int
+    +getNome(): String
+    +getGenero(): String
+    +getDescricao(): String
+    +getValor(): float
+    +getDesenvolvedora(): String
+    +getQuantConquistas(): int
+    +getDescontoElegivel(): int
+
+    +setNome(nome: String): boolean
+    +setGenero(genero: String): boolean 
+    +setDescricao(descricao: String): boolean
+    +setValor(valor: float): boolean
+    +setDesenvolvedora(dev: String): boolean
+    +setQuantConquistas(quant: int): boolean
+    +setDescontoElegivel(temDesconto: boolean): boolean
+}
+
+class Cupom{
+    -idCupom: int
+    -cpf: int
+    -desconto: int
+
+    +getIdCupom(): int
+    +getCpf(): int
+    +getDesconto(): int
+}
+
+Cupom <-- "1" Usuario: possui >
+Funcionario -- "1" Jogo: gerencia >
+Funcionario -- "1" Cupom: gerencia >
+
+class JogoUsuario{
+    -cpf: int
+    -idJogo: int
+    -quantObtidaConquistas: int
+    -temCupom: boolean
+
+    +getCpf(): int
+    +getIdJogo(): int
+    +getQuantObtidaConquistas(): int
+    +getTemCupom(): boolean
+}
+
+Usuario "1" -- "0..n" JogoUsuario: possui >
+JogoUsuario "0..n" -- "1" Jogo
+
+' Controle
+
+class ControleUsuario{
+    +criarUsuario(nome: String, cpf: String, email: String, senha: String): boolean
+    +editarUsuario(cpf: String, item: String, valor: String): boolean
+    +buscarUsuario(connection: Connection, cpf: String): Usuario
+    +removerUsuario(cpf: String): boolean
+    +autenticarUsuario(email: String, senha: String): Usuario
+}
+
+ControleUsuario --> Usuario: gerencia >
+
+class ControleFuncionario{
+    +criarFuncionario(usuario: Usuario): boolean
+    +editarFuncionario(cpf: String, item: String, valor: String): boolean
+    +removerFuncionario(cpf: String): boolean
+    +autenticarFuncionario(email: String, senha: String): Usuario
+}
+
+ControleFuncionario --> Funcionario: gerencia >
+
+class ControleJogo{
+    +criarJogo(nome: String, genero: String, descricao: String, valor: float, desenvolvedora: String, quantConquistas: int, descontoElegivel: int): boolean
+    +buscarJogo(int idJogo): Jogo jogo
+    +listarJogos(): ArrayList<Jogo>
+    +listarJogos(genero: String): ArrayList<Jogo>
+    +listarJogos(valor: float): ArrayList<Jogo>
+    +editarJogo(id: int, item: String, valor: String): boolean
+    +excluirJogo(idJogo: int): boolean
+}
+
+ControleJogo --> Jogo: gerencia > 
+
+class ControleCupom{
+    +criarCupom(int idCupom, String cpf): boolean
+    +buscaCupom(int idCupom): cupom
+    +calculaDesconto(jogoUsuario: JogoUsuario): int
+    +checaDesconto(jogo: Jogo, cupom: Cupom): int
+    +usarCupom(jogo: Jogo, cupom: Cupom): boolean
+}
+
+ControleCupom --> Cupom: gerencia >
+
+class ControleJogoUsuario{
+    +comprarJogo(usuario: Usuario, jogo: Jogo): boolean
+}
+
+ControleJogoUsuario --> JogoUsuario: gerencia >
+
+' View
+
+class ViewMain{
+    +solicitaCriarUsuario(nome: String, cpf: String, email: String, senha: String): boolean
+    +solicitaEditarUsuario(cpf: String, item: String, valor: String): boolean
+    +solicitaRemoverUsuario(cpf: String): boolean
+    +solicitaAutenticarUsuario(email: String, senha: String): Usuario    
+    +solicitaCriarFuncionario(usuario: Usuario): boolean
+    +solicitaRemoverFuncionario(cpf: String): boolean
+    +solicitaCriarJogo(nome: String, genero: String, descricao: String, valor: float, desenvolvedora: String, quantConquistas: int, descontoElegivel: int): boolean
+    +solicitaListarJogos(): ArrayList<Jogo>
+    +solicitaListarJogos(genero: String): ArrayList<Jogo>
+    +solicitaListarJogos(valor: float): ArrayList<Jogo>
+    +solicitaEditarJogo(id: int, item: String, valor: String): boolean
+    +solicitaExcluirJogo(idJogo: int): boolean
+    +solicitaCriarCupom(jogoUsuario: JogoUsuario): boolean
+    +solicitaCalculaDesconto(jogoUsuario: JogoUsuario): int
+    +solicitaChecaDesconto(jogo: Jogo, cupom: Cupom): int
+    +solicitaUsarCupom(jogo: Jogo, cupom: Cupom): boolean
+    +solicitaComprarJogo(usuario: Usuario, jogo: Jogo): boolean
+}
+
+ViewMain -- ControleCupom
+ViewMain -- ControleFuncionario
+ViewMain -- ControleJogo
+ViewMain -- ControleJogoUsuario
+ViewMain -- ControleUsuario
+
+
+@enduml

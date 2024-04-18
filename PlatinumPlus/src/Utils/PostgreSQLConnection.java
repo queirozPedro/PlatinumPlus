@@ -1,3 +1,6 @@
+package Utils;
+
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -6,11 +9,17 @@ public class PostgreSQLConnection {
     private static PostgreSQLConnection instance; // Instancia de Banco de Dados
     private Connection connection; // Conectar o Banco 
 
+    private final String url = "jdbc:postgresql://isabelle.db.elephantsql.com:5432/klanfdoe";
+    private final String username = "klanfdoe";
+    private final String password = "bmiNoFORaiJ_E0cJKWYhJFLKq0oSSVCR";
 
-    private final String url = "";
-    private final String username = "";
-    private final String password = "";
-
+    /*
+     * Para a conexão com o Banco no PgAdmin4
+     * Port: 5432
+     * Host: isabelle.db.elephantsql.com
+     * User: klanfdoe
+     * Password: bmiNoFORaiJ_E0cJKWYhJFLKq0oSSVCR
+     */
 
     // Cria uma conexão com o Banco de Dados
     private PostgreSQLConnection() {
