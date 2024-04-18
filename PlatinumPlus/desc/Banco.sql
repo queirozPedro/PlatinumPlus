@@ -26,7 +26,7 @@ CREATE TABLE Jogo (
 CREATE TABLE JogoUsuario (
     cpfUsuario VARCHAR(11) NOT NULL,
     idJogo int NOT NULL,
-    QuantObtidaConquistas int NOT NULL,
+    QuantObtidaConquistas int DEFAULT 0,
     TemCupom int DEFAULT 1,
     FOREIGN KEY (idJogo) REFERENCES Jogo(idJogo),
     FOREIGN KEY (cpfUsuario) REFERENCES Usuario(cpf)
@@ -39,8 +39,6 @@ CREATE TABLE Cupom (
     FOREIGN KEY (cpf) REFERENCES Usuario(cpf)
 );
 
-insert into usuario(cpf, nome, email, senha, telefone) values ("admin", "admin", "admin", "admin", "admin");
-insert into Funcionario(cpf) value ("admin");
 
 -- Vou fazer aqui em baixo os Drops das Tabelas, pra quando a gente quiser limpar o banco
 
@@ -51,6 +49,12 @@ DROP TABLE Jogo;
 DROP TABLE Usuario;
 
 -- Para popular o banco
+
+INSERT INTO Usuario (cpf, nome, senha, email, telefone) VALUES 
+('admin', 'admin', 'admin', 'admin@admin.com', 'admin');
+
+INSERT INTO Funcionario (cpf) VALUES ('admin');
+
 
 INSERT INTO Jogo (Nome, Genero, Descricao, Valor, Desenvolvedora, QuantConquistas, DescontoElegivel) VALUES 
 ('Call of Duty: Modern Warfare', 'FPS', 'Um dos melhores jogos de tiro em primeira pessoa', 59.99, 'Infinity Ward', 70, 1),
@@ -63,3 +67,4 @@ INSERT INTO Jogo (Nome, Genero, Descricao, Valor, Desenvolvedora, QuantConquista
 ('Titanfall 2', 'FPS', 'Um jogo de tiro com robôs gigantes e ação acelerada', 19.99, 'Respawn Entertainment', 70, 27),
 ('Half-Life: Alyx', 'FPS', 'Uma experiência de realidade virtual imersiva na saga Half-Life', 59.99, 'Valve', 40, 28),
 ('Metro Exodus', 'FPS', 'Uma jornada através de um mundo pós-apocalíptico russo', 29.99, '4A Games', 60, 30);
+

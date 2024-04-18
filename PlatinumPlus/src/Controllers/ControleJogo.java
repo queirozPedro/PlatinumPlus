@@ -113,6 +113,12 @@ public class ControleJogo {
         return null;
     }
 
+    /**
+     * Busca Jogo por Nome, Gênero e Desenvolvedora
+     * @param connection
+     * @param string
+     * @return ArrayList<Jogo>
+     */
     public static ArrayList<Jogo> buscarJogo(Connection connection, String string) {
         PreparedStatement state = null;
         ResultSet result = null;
@@ -374,19 +380,4 @@ public class ControleJogo {
         return "";
     }
 
-    public static String listarJogosUsuario(ArrayList<Jogo> jogos){
-        String string = "";
-        for(int i = 0; i < jogos.size(); i++){
-            string += jogos.get(i).exibirJogo()+"\n\n";
-        }
-        return string;
-
-    }
-    public static String listarJogosFuncionario(ArrayList<Jogo> jogos){
-        String string = "";
-        for(int i = 0; i < jogos.size(); i++){
-            string += jogos.get(i).toString()+"\n\n";
-        }
-        return string;
-    }
 }

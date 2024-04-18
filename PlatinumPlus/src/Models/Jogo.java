@@ -83,21 +83,28 @@ public class Jogo {
         this.descontoElegivel = descontoElegivel;
     }
 
-    @Override
-    public String toString() {
-        return "Jogo {" +
-                "\n   Id=" + id +
-                "\n   Nome='" + nome + '\'' +
-                "\n   Genero='" + genero + '\'' +
-                "\n   Descricao='" + descricao + '\'' +
-                "\n   Valor=" + valor +
-                "\n   Desenvolvedora='" + desenvolvedora + '\'' +
-                "\n   QuantConquistas=" + quantConquistas +
-                "\n   DescontoElegivel=" + descontoElegivel +
-                "\n}";
+    public String exibirListaDetalhada() {
+        return  "\n  |Nome='" + nome + '\'' +
+                "\n  |Genero='" + genero + '\'' +
+                "\n  |Descricao='" + descricao + '\'' +
+                "\n  |Valor=" + valor +
+                "\n  |Desenvolvedora='" + desenvolvedora + '\'' +
+                "\n  |QuantConquistas=" + quantConquistas +
+                "\n  |DescontoElegivel=" + descontoElegivel;
+    }
+    
+    public String exibirListaFuncionario() {
+        return  "\n  |Id=" + id +
+                "\n  |Nome='" + nome + '\'' +
+                "\n  |Genero='" + genero + '\'' +
+                "\n  |Descricao='" + descricao + '\'' +
+                "\n  |Valor=" + valor +
+                "\n  |Desenvolvedora='" + desenvolvedora + '\'' +
+                "\n  |QuantConquistas=" + quantConquistas +
+                "\n  |DescontoElegivel=" + descontoElegivel;
     }
 
-    public String exibirJogo() {
+    public String exibirListaResumo() {
         return  "  |Nome = " + nome +
                 "\n  |Genero = " + genero +
                 "\n  |Valor = R$" + String.format("%.2f", valor).replace(".", ",");
