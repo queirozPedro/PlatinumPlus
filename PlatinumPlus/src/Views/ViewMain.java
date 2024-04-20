@@ -1,12 +1,9 @@
 package Views;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Scanner;
-
-import org.postgresql.jdbc2.ArrayAssistantRegistry;
 
 import Utils.PostgreSQLConnection;
 
@@ -23,11 +20,6 @@ public class ViewMain {
         }
     }
 
-    /**
-     * precisa implementar:
-     * navegar os jogos sem logar, logando como admin, e logando como usuario
-     * 
-     */
     public static void main(String[] args) throws InterruptedException, IOException {
         boolean sair = false;
         Scanner sc = new Scanner(System.in);
@@ -83,17 +75,17 @@ public class ViewMain {
                     case 1:
                         LimpaTela();
                         System.out.println(" < Gêneros >");
-                        System.out.println(" 1 -> Ação");
-                        System.out.println(" 2 -> Aventura");
-                        System.out.println(" 3 -> RPG ");
-                        System.out.println(" 4 -> Drama");
-                        System.out.println(" 5 -> Terror");
-                        System.out.println(" 6 -> FPS");
-                        System.out.println(" 7 -> Luta");
-                        System.out.println(" 8 -> Puzzle");
-                        System.out.println(" 9 -> Multiplayer");
-                        System.out.println("10 -> Singleplayer");
-                        System.out.println(" 0 -> Voltar");
+                        System.out.println("  1  -> Ação");
+                        System.out.println("  2  -> Aventura");
+                        System.out.println("  3  -> RPG ");
+                        System.out.println("  4  -> Drama");
+                        System.out.println("  5  -> Terror");
+                        System.out.println("  6  -> FPS");
+                        System.out.println("  7  -> Luta");
+                        System.out.println("  8  -> Puzzle");
+                        System.out.println("  9  -> Multiplayer");
+                        System.out.println("  10 -> Singleplayer");
+                        System.out.println("  0  -> Voltar");
                         System.out.print(" >> ");
                         switch (Integer.valueOf(sc.nextLine())) {
                             case 1:
@@ -107,7 +99,7 @@ public class ViewMain {
                                                 + jogos.get(i).exibirListaResumo() + "\n");
                                     }
                                 } else {
-                                    System.out.println(colorirTexto(" Nenhum jogo encontrado.", corVermelho));
+                                    System.out.println(colorirTexto("\n Nenhum jogo encontrado.", corVermelho));
                                 }
                                 pressEnterToContinue(sc);
                                 break;
@@ -122,7 +114,7 @@ public class ViewMain {
                                                 + jogos.get(i).exibirListaResumo() + "\n");
                                     }
                                 } else {
-                                    System.out.println(colorirTexto(" Nenhum jogo encontrado.", corVermelho));
+                                    System.out.println(colorirTexto("\n Nenhum jogo encontrado.", corVermelho));
                                 }
                                 pressEnterToContinue(sc);
                                 break;
@@ -137,7 +129,7 @@ public class ViewMain {
                                                 + jogos.get(i).exibirListaResumo() + "\n");
                                     }
                                 } else {
-                                    System.out.println(colorirTexto(" Nenhum jogo encontrado.", corVermelho));
+                                    System.out.println(colorirTexto("\n Nenhum jogo encontrado.", corVermelho));
                                 }
                                 pressEnterToContinue(sc);
                                 break;
@@ -152,7 +144,7 @@ public class ViewMain {
                                                 + jogos.get(i).exibirListaResumo() + "\n");
                                     }
                                 } else {
-                                    System.out.println(colorirTexto(" Nenhum jogo encontrado.", corVermelho));
+                                    System.out.println(colorirTexto("\n Nenhum jogo encontrado.", corVermelho));
                                 }
                                 pressEnterToContinue(sc);
                                 break;
@@ -167,7 +159,7 @@ public class ViewMain {
                                                 + jogos.get(i).exibirListaResumo() + "\n");
                                     }
                                 } else {
-                                    System.out.println(colorirTexto(" Nenhum jogo encontrado.", corVermelho));
+                                    System.out.println(colorirTexto("\n Nenhum jogo encontrado.", corVermelho));
                                 }
                                 pressEnterToContinue(sc);
                                 break;
@@ -182,7 +174,7 @@ public class ViewMain {
                                                 + jogos.get(i).exibirListaResumo() + "\n");
                                     }
                                 } else {
-                                    System.out.println(colorirTexto(" Nenhum jogo encontrado.", corVermelho));
+                                    System.out.println(colorirTexto("\n Nenhum jogo encontrado.", corVermelho));
                                 }
                                 pressEnterToContinue(sc);
                                 break;
@@ -197,7 +189,7 @@ public class ViewMain {
                                                 + jogos.get(i).exibirListaResumo() + "\n");
                                     }
                                 } else {
-                                    System.out.println(colorirTexto(" Nenhum jogo encontrado.", corVermelho));
+                                    System.out.println(colorirTexto("\n Nenhum jogo encontrado.", corVermelho));
                                 }
                                 pressEnterToContinue(sc);
                                 break;
@@ -212,7 +204,7 @@ public class ViewMain {
                                                 + jogos.get(i).exibirListaResumo() + "\n");
                                     }
                                 } else {
-                                    System.out.println(colorirTexto(" Nenhum jogo encontrado.", corVermelho));
+                                    System.out.println(colorirTexto("\n Nenhum jogo encontrado.", corVermelho));
                                 }
                                 pressEnterToContinue(sc);
                                 break;
@@ -227,7 +219,7 @@ public class ViewMain {
                                                 + jogos.get(i).exibirListaResumo() + "\n");
                                     }
                                 } else {
-                                    System.out.println(colorirTexto(" Nenhum jogo encontrado.", corVermelho));
+                                    System.out.println(colorirTexto("\n Nenhum jogo encontrado.", corVermelho));
                                 }
                                 pressEnterToContinue(sc);
                                 break;
@@ -242,7 +234,7 @@ public class ViewMain {
                                                 + jogos.get(i).exibirListaResumo() + "\n");
                                     }
                                 } else {
-                                    System.out.println(colorirTexto(" Nenhum jogo encontrado.", corVermelho));
+                                    System.out.println(colorirTexto("\n Nenhum jogo encontrado.", corVermelho));
                                 }
                                 pressEnterToContinue(sc);
                                 break;
@@ -415,7 +407,7 @@ public class ViewMain {
                                         if (ControleUsuario.criarConta(connection, nome, cpf, email, reSenha,
                                                 telefone)) {
                                             System.out
-                                                    .println(colorirTexto("Usuário Cadastrado com Sucesso!", corVerde));
+                                                    .println(colorirTexto(" Usuário Cadastrado com Sucesso!", corVerde));
                                             System.out.print(" Aperte Enter para Continuar!");
                                             sc.nextLine();
                                             return;
@@ -450,11 +442,6 @@ public class ViewMain {
         } while (!sair);
     }
 
-    /**
-     * falta implementar:
-     * case 1, 2, 3, 4, e 5
-     * implementar o log out no case 5
-     */
     public static void menuUsuario(Scanner sc, Usuario usuario) throws InterruptedException, IOException {
         boolean sair = false;
         do {
@@ -465,7 +452,6 @@ public class ViewMain {
                 System.out.println(" 2 -> Pesquisar Jogo");
                 System.out.println(" 3 -> Minha Biblioteca");
                 System.out.println(" 4 -> Meus Cupons");
-                System.out.println(" 5 -> Meu Perfil*");
                 System.out.println(" 0 -> Sair");
                 System.out.print(" >> ");
                 ArrayList<Jogo> jogos = null;
@@ -582,7 +568,8 @@ public class ViewMain {
                                         idx = Integer.valueOf(sc.nextLine());
                                         LimpaTela();
                                         System.out.println(" < Criando Cupom >");
-                                        System.out.println(jogos.get(idx + 1).exibirListaDetalhada());
+                                        System.out.println(colorirTexto("\n Cupom Criado", corVerde));
+                                        System.out.println(colorirTexto(" Falta implementar.", corVermelho));
                                         pressEnterToContinue(sc);
                                     } else {
                                         System.out.println(" Você não pode criar cupons no momento.");
@@ -590,7 +577,8 @@ public class ViewMain {
                                     }
                                     break;
                                 case 2:
-
+                                    System.out.println(" < Meus Cupons >");
+                                    System.out.println(colorirTexto("\n Falta Implementar.", corVermelho));
                                     break;
                                 case 3:
 
@@ -614,11 +602,6 @@ public class ViewMain {
         } while (!sair);
     }
 
-    /**
-     * case 2 vai ser removido
-     * falta implementar:
-     * case 3
-     */
     public static void menuFuncionario(Scanner sc, Funcionario funcionario) throws InterruptedException, IOException {
         boolean sair = false;
         do {
@@ -656,7 +639,7 @@ public class ViewMain {
                 LimpaTela();
                 System.out.println("  === Gerenciar Jogos ===");
                 System.out.println(" 1 -> Adicionar Jogo");
-                System.out.println(" 2 -> Remover Jogo");
+                System.out.println(" 2 -> Remover Jogo*");
                 System.out.println(" 3 -> Buscar Jogo");
                 System.out.println(" 4 -> Editar Jogo*");
                 System.out.println(" 0 -> Sair");
@@ -751,7 +734,7 @@ public class ViewMain {
                     case 4:
                         LimpaTela();
                         System.out.println(" < Editar Jogos >");
-                        System.out.println(" Falta implementar");
+                        System.out.println(colorirTexto(" Falta implementar.", corVermelho));
                         System.out.print(" Aperte enter para continuar! ");
                         sc.nextLine();
                         break;
@@ -794,11 +777,6 @@ public class ViewMain {
     public static final String resetCor = "\u001B[0m";
     public static final String corVermelho = "\u001B[31m";
     public static final String corVerde = "\u001B[32m";
-    public static final String corAmarelo = "\u001B[33m";
-    public static final String corAzul = "\u001B[34m";
-    public static final String corRoxo = "\u001B[35m";
-    public static final String corCiano = "\u001B[36m";
-    public static final String corBranco = "\u001B[37m";
 
     /**
      * Método que recebe o código de uma cor e uma string e altera a cor dela

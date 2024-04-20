@@ -20,7 +20,6 @@ public class ControleCupom {
         if (buscaCupom(connection, idCupom) == null) {
             try {
 
-                // Insere o usuário na tabela Usuario
                 String query = "INSERT Into Cupom (idCupom, cpf, desconto) VALUES (?, ?, ?)";
                 state = connection.prepareStatement(query);
                 state.setInt(1, idCupom);
@@ -28,7 +27,6 @@ public class ControleCupom {
                 state.setInt(3, 0);
                 state.executeUpdate();
 
-                // Insere os telefones dele na tabela Telefone com base em seu cpf
                 System.out.println(" Cupom Cadastrado!");
 
             } catch (SQLException e) {
@@ -52,13 +50,12 @@ public class ControleCupom {
         ResultSet result = null;
 
         try {
-            // Seleciona tudo (*) na tabela Usuario onde o cpf foi o igual ao recebido
+        
             String query = "SELECT * From Cupom where cpf = ?";
             state = connection.prepareStatement(query);
             state.setInt(1, idCupom);
             result = state.executeQuery();
 
-            // Retorna o usuário
             if (result.next()) {
                 return new Cupom(result.getInt(1), result.getString(2), result.getInt(3));
             }

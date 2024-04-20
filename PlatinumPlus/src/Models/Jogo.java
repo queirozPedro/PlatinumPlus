@@ -89,8 +89,7 @@ public class Jogo {
                 "\n  |Descricao='" + descricao + '\'' +
                 "\n  |Valor=" + valor +
                 "\n  |Desenvolvedora='" + desenvolvedora + '\'' +
-                "\n  |QuantConquistas=" + quantConquistas +
-                "\n  |DescontoElegivel=" + descontoElegivel;
+                "\n  |QuantConquistas=" + quantConquistas;
     }
     
     public String exibirListaFuncionario() {

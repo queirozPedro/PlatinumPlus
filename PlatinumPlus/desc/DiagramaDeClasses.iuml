@@ -152,11 +152,11 @@ class ViewMain{
     +solicitaComprarJogo(usuario: Usuario, jogo: Jogo): boolean
 }
 
-ViewMain -- ControleCupom
-ViewMain -- ControleFuncionario
-ViewMain -- ControleJogo
-ViewMain -- ControleJogoUsuario
-ViewMain -- ControleUsuario
+ViewMain -down- ControleCupom
+ViewMain -down- ControleFuncionario
+ViewMain -down- ControleJogo
+ViewMain -down- ControleJogoUsuario
+ViewMain -down- ControleUsuario
 
 
 @enduml
